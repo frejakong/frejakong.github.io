@@ -1,1 +1,0 @@
-$(function(){$(".help-inline-link").each(function(){var t=$(this);t.after($("<a/>").attr("href",t.find("a").attr("href")).html(t.text())).remove()})});
