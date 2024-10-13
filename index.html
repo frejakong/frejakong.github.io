@@ -1,814 +1,427 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <!-- Site made with Mobirise Website Builder v5.0.2, https://mobirise.com -->
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="generator" content="Mobirise v5.0.2, mobirise.com">
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-    <link rel="shortcut icon" href="https://img.icons8.com/external-itim2101-flat-itim2101/64/000000/external-spaceship-space-and-galaxy-itim2101-flat-itim2101.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fanyu Kong - UI/UX Designer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a1a;
+            --text-color: #ffffff;
+            --neon-pink: #ff00ff;
+            --neon-blue: #00ffff;
+            --neon-green: #00ff00;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: rgba(10, 10, 10, 0.8);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 20px 0;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav ul li a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--neon-pink);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink), 0 0 15px var(--neon-pink);
+        }
+
+        nav ul li a:hover::before {
+            transform: scaleX(1);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px var(--neon-blue), -2px -2px var(--neon-pink);
+            animation: textFlicker 2s infinite alternate;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            margin-bottom: 30px;
+            animation: neonPulse 1.5s infinite alternate;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: rgba(0, 255, 0, 0.2);
+            color: var(--neon-green);
+            padding: 12px 30px;
+            border: 2px solid var(--neon-green);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green);
+            box-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green);
+        }
+
+        .btn:hover {
+            background-color: var(--neon-green);
+            color: var(--primary-bg);
+            text-shadow: none;
+        }
+
+        .pixel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                    linear-gradient(to right, rgba(26, 26, 26, 0.1) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(26, 26, 26, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 2;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
 
 
-  <title>Kong Fanyu</title>
-      <link rel="stylesheet" href="static/css/tether.min.css">
-  <link rel="stylesheet" href="static/css/style62.css">
-  <link rel="stylesheet" href="static/css/bootstrap.min12.css">
-  <link rel="stylesheet" href="static/css/bootstrap-grid.min8.css">
-  <link rel="stylesheet" href="static/css/bootstrap-reboot.min8.css">
-  <link rel="stylesheet" href="static/css/styles3.css">
-  <link rel="stylesheet" href="static/css/style.css">
-  <link rel="stylesheet" href="static/css/style64.css">
-  <link rel="stylesheet" href="static/css/937f5b3141.css" type="text/css">
+        .about {
+            padding: 100px 0;
+            background-color: var(--secondary-bg);
+        }
 
+        .about-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-  <link rel="stylesheet" href="static/css/mobirise21.css">
-  <link rel="stylesheet" href="static/css/mobirise-icons.css">
-  <link rel="stylesheet" href="static/css/tether.min.css">
-  <link rel="stylesheet" href="static/css/bootstrap.min4.css">
-  <link rel="stylesheet" href="static/css/bootstrap-grid.min4.css">
-  <link rel="stylesheet" href="static/css/bootstrap-reboot.min4.css">
-  <link rel="stylesheet" href="static/css/style.css">
-  <link rel="stylesheet" href="static/css/styles1.css">
-  <link rel="stylesheet" href="static/css/style22.css">
-  <link rel="preload" as="style" href="static/css/mbr-additional34.css"><link rel="stylesheet" href="static/css/mbr-additional34.css" type="text/css">
+        .about-text {
+            flex: 1;
+            padding-right: 50px;
+        }
 
+        .about-text h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px var(--neon-blue), -2px -2px var(--neon-pink);
+        }
 
+        .about-text h3{
 
+            margin: 20px;
+            color: var(--neon-blue);
+        }
+
+        .about-text h4{
+
+            margin: 15px;
+            color: var(--neon-pink);
+        }
+
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+            image-rendering: pixelated;
+        }
+
+        .work {
+            padding: 100px 0;
+        }
+
+        .work h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px var(--neon-blue), -2px -2px var(--neon-pink);
+        }
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .work-item {
+            background-color: var(--secondary-bg);
+            border: 2px solid var(--neon-pink);
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .work-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--neon-pink), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .work-item:hover::before {
+            opacity: 0.3;
+        }
+
+        .work-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+        }
+
+        .work-item video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .work-item-content {
+            padding: 20px;
+        }
+
+        .work-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--neon-blue);
+        }
+
+        footer {
+            background-color: var(--secondary-bg);
+            text-align: center;
+            padding: 30px 0;
+            border-top: 2px solid var(--neon-green);
+        }
+
+        @keyframes textFlicker {
+            0%, 100% {
+                text-shadow: 2px 2px var(--neon-blue), -2px -2px var(--neon-pink);
+            }
+            50% {
+                text-shadow: 2px 2px var(--neon-pink), -2px -2px var(--neon-blue);
+            }
+        }
+
+        @keyframes neonPulse {
+            from {
+                text-shadow: 0 0 5px var(--text-color), 0 0 10px var(--text-color);
+            }
+            to {
+                text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue), 0 0 15px var(--neon-blue);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 0.8rem;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .about-text {
+                padding-right: 0;
+                margin-bottom: 30px;
+            }
+        }
+    </style>
 </head>
-<style>
-    @import url('https://fonts.googleapis.com/css?family=Nixie+One');
-
-
-.neon {
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
-  padding: 30px;
-  font-size: 20px;
-  font: normal 150px/100px 'Nixie One';
-  color: #eedde0;
-  text-shadow: 0 0 30px #ec637b,
-    0 0 10px rgba(230, 161, 173, 0.41),
-    0 0 100px #e6a1ad,
-    0 0 500px #f36789,
-    5px 9px 5px rgba(0,0,0,.5);
-  animation: flash 1s infinite alternate;
-  transition: all .3s;
-}
-
-@keyframes flash {
-  to {
-    text-shadow: 0 0 30px #EC637B,
-		0 0 10px rgba(230, 161, 173, 0.41),
-		0 0 100px #E6A1AD,
-		0 0 500px #F36780,
-		5px 9px 5px rgba(0, 0, 0, 0.5);
-  }
-  from {
-    text-shadow: 7px 7px 5px rgba(0, 0, 0, 0.5);
-  }
-}
-</style>
 <body>
-
-  <section class="menu menu1 cid-s8WN7NjDdJ" style="opacity: 0.5" once="menu" id="menu1-0">
-
-
-    <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
-        <div class="container-fluid">
-            <div class="navbar-brand">
-
-                <span class="navbar-caption-wrap"><a class="navbar-caption text-black display-5" href="javascript:;">
-<img src="https://img.icons8.com/external-itim2101-flat-itim2101/64/000000/external-spaceship-space-and-galaxy-itim2101-flat-itim2101.png"/>
-                </a>
-
-                </span>
-            </div>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
-
-                    <li class="nav-item"><a class="nav-link link text-black display-4" href="#features5-37" aria-expanded="true">Resume</a></li>
-                    <li class="nav-item"><a class="nav-link link text-black display-4" href="#worksdemo" aria-expanded="true">
-                            Works</a></li>
-
-                    <li class="nav-item"><a class="nav-link link text-black display-4" href="#contacts02-6">Contacts</a>
-                    </li>
-                </ul>
-
-
-            </div>
-        </div>
+<header>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#work">Work</a></li>
+        </ul>
     </nav>
-</section>
+</header>
 
-<section class="header1 cid-s8WN8WYLOz" id="header01-1">
+<main>
+    <section id="home" class="hero">
+        <video class="hero-video" autoplay loop muted playsinline>
+            <source src="/video/background.mp4" type="video/mp4">
+        </video>
+        <div class="pixel-overlay"></div>
+        <div class="hero-content">
+            <h1>Fanyu Kong</h1>
+            <p>Former Software Engineer Transitioning to UI/UX Design</p>
+            <p>Healthcare Advocate</p>
+            <p>Passionate about Social Impact & Marginalized Communities</p>
 
+            <a href="#work" class="btn">View My Work</a>
+        </div>
+    </section>
 
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Me</h2>
+                    <h3>Education</h3>
+                    <h4>University of Ottawa, Ottawa, ON, Canada</h4>
+                    <p><strong>Master of Digital Transformation and Innovation, Concentration UX Design</strong><br>
+                        Jan 2023 – Aug 2024
+                    </p>
 
-    <div class="align-left container">
-            <div class="mbr-section-text neon" style="margin-bottom: 90px">
-               I am Kong Fanyu
-               </div>
+                    <h4>University College Dublin, Dublin, Ireland</h4>
+                    <p><strong>Bachelor of Science - Software Engineering</strong><br>
+                        Sept 2018 – Jun 2022
+                    </p>
 
-        <div class="row">
-            <div class="col-12 col-md-12 col-lg-12">
+                    <h3>Work Experience</h3>
 
-                <div class="align-left typed-text pb-3 display-1">
-                    <span class="mbr-section-subtitle mbr-fonts-style mbr-white display-1">
-                          UX/UI
-                    </span>
-                    <span>
-                      <span class="animated-element mbr-white mbr-bold" data-word1="Lover" data-word2="Designer" data-word3="Dreamer" data-speed="50">
-                      </span>
-                    </span>
+                    <h4>UI/UX Designer (Volunteer), AImpower.org (Remote)</h4>
+                    <p>Nov 2023 – Present</p>
+                    <p>Designed inclusive technologies that empower structurally marginalized communities with Figma and Adobe XD.
+                    </p>
+
+                    <h4>UI/UX Designer and Front-end Developer (Internship), Research Center of Digital Humanities of Peking University (Remote)</h4>
+                    <p>Mar 2022 – Dec 2022</p>
+                    <p> Developed front-end business solutions using HTML, CSS, and Vue.js.<br>
+                        Collaborated with product managers and designers to fulfill product requirements.<br>
+                        Assisted back-end developers in interface debugging and functionality testing.
+                    </p>
                 </div>
-                     <p class="align-center mbr-section-text mbr-fonts-style mbr-white display-5">
-                    SPECIALIZED IN UX/UI DESIGN AND FRONT-END DEVELOPING
-                </p>
-                <div class="align-center mbr-section-btn"><a class="btn btn-lg btn-white-outline display-4" href="#features5-37">See my Resume</a></div>
+
+
+                <div class="about-image">
+                    <img src="/image/me.JPG?height=300&width=300" alt="Your Name">
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-</section>
-<section class="cid-qwp7xkwPyd" style="padding-bottom:50px " id="features5-37" data-rv-view="3448">
+    <section id="work" class="work">
+        <div class="container">
+            <h2>My Work</h2>
+            <div class="work-grid">
+                <div class="work-item">
+                    <video src="/video/to-do%20rpg.mov" controls></video>
+                    <div class="work-item-content">
+                        <h3>To-Do RPG (2024)</h3>
+                        <p>A UX design renovation for my To-Do RPG (2021) project.  </div>
+                </div>
 
+                <div class="work-item">
+                    <video src="/video/moonshadow.mp4" controls></video>
+                    <div class="work-item-content">
+                        <h3>Moonshadow Tides</h3>
+                        <p>An immersive game concept design centered on themes of spirit exorcism and supernatural mysteries. As the protagonist, Suigetsu, players navigate world where they can recruit party members Li Guanghan and Luna. The game features elements of feng shui and explores the interplay between light and shadow.</div>
+                </div>
 
+                <div class="work-item">
+                    <video src="/video/eHospital.mp4" controls></video>
+                    <div class="work-item-content">
+                        <h3>e-Hospital</h3>
+                        <p>A digital healthcare platform designed to enhance user experience and streamline patient interactions. As a UI/UX Designer and Front-end Developer, I utilized Figma for interface design and implemented the front-end using React.js, focusing on creating an intuitive user journey and optimized project architecture.  </div>
+                </div>
 
-    <div class="container-fluid">
-        <div class="row align-items-center content-row">
-          <div class="col-lg-6 wrap-block">
-              <h1 class="mbr-section-title mbr-fonts-style mbr-light display-2">ABOUT ME</h1>
-              <h2 class="mbr-section-subtitle mbr-fonts-style mbr-light display-5">My Experience</h2>
-              <h3 class="mbr-text mbr-fonts-style mbr-light display-7">
-                  Study in BJUT & University College Dublin since 2018 - now
-              </h3>
-              <div class="mbr-list counter-container mbr-fonts-style display-7">
-                <ul>
-                    <li>Major in software engineering</li>
-                    <li>Learning UX/UI on CareerFoundry</li>
-                    <li>Be interested in front-end development</li>
+                <div class="work-item">
+                    <video src="/video/Bouquet%20Pickup%20Presentation.mp4" controls></video>
+                    <div class="work-item-content">
+                        <h3>Flower Bouquet</h3>
+                        <p>An online flower shop developed as part of my software engineering coursework, "Bouquet Pickup" offers a seamless shopping experience for floral arrangements. My role involved analyzing user requirements, creating wireframes and prototypes, and conducting front-end development with Django.</div>
+                </div>
 
-                </ul>
+                <div class="work-item">
+                    <video src="/video/app.mp4" controls></video>
+                    <div class="work-item-content">
+                        <h3>To-Do RPG (2021)</h3>
+                        <p>A mobile application that integrates a to-do list with role-playing game elements, offering users an engaging way to manage tasks. My work included designing wireframes, developing the application’s main framework, and implementing interactive features using Java. </div>
+                </div>
             </div>
+        </div>
+    </section>
+</main>
 
-          </div>
-          <div class="col-lg-6 photo-split">
-              <img src="static/image/me.jpg" size="500px" media-simple="true">
-          </div>
-      </div>
-    </div>
-
-</section>
-
-  <section class="progress-bars1 cid-s8XeLFijPd" id="progress-bars01-5">
-
-
-
-
-
+<footer>
     <div class="container">
-
-
-        <div class="row">
-            <div class="col-md-12 col-lg-6 text-elements pb-4 md-pb">
-                <h3 class="mbr-section-subtitle mbr-fonts-style align-left mb-3 display-4">My Study</h3>
-                <h4 class="section-content-title pb-3 align-left mbr-fonts-style display-2"><strong>Learning in the university</strong>
-                </h4>
-                <p class="section-content-text align-left mbr-fonts-style display-7">
-                    Specialized courses with excellent grades
-                </p>
-            </div>
-
-            <div class="progress_elements col-md-12 col-lg-6 pt-4">
-                <div class="progress1 pb-5">
-                    <div class="title-wrap">
-                        <div class="progressbar-title mbr-fonts-style display-7">
-                            <p>Database & Info sys
-                                <br></p>
-                        </div>
-                        <div class="progress_value mbr-fonts-style display-7">
-                             
-                             <span>A</span>
-                        </div>
-                    </div>
-                    <progress class="progress progress-primary " max="100" value="92">
-                    </progress>
-                </div>
-
-                <div class="progress2 pb-5">
-                    <div class="title-wrap">
-                        <div class="progressbar-title mbr-fonts-style display-7">
-                            <p>Computer Graphic
-                                <br></p>
-                        </div>
-                        <div class="progress_value mbr-fonts-style display-7">
-                             
-                             <span>A</span>
-                        </div>
-                    </div>
-                    <progress class="progress progress-primary" max="100" value="95">
-                    </progress>
-                </div>
-
-                <div class="progress3 pb-5">
-                    <div class="title-wrap">
-                        <div class="progressbar-title mbr-fonts-style display-7">
-                            <p>Software engineering proj
-                                <br></p>
-                        </div>
-                        <div class="progress_value mbr-fonts-style display-7">
-                             
-                             <span>A</span>
-                        </div>
-                    </div>
-                    <progress class="progress progress-primary" max="100" value="93">
-                    </progress>
-                </div>
-
-                <div class="progress4 pb-5">
-                    <div class="title-wrap">
-                        <div class="progressbar-title mbr-fonts-style display-7">
-                            <p>Mobile computing
-                                <br></p>
-                        </div>
-                        <div class="progress_value mbr-fonts-style display-7">
-                             
-                             <span>A</span>
-                        </div>
-                    </div>
-                    <progress class="progress progress-primary" max="100" value="90">
-                    </progress>
-                </div>
-
-
-            </div>
-        </div>
+        <p>&copy; Fanyu Kong. All rights reserved.</p>
+        <p>Email: freja.kong@outlook.com</p>
     </div>
-</section>
-
-
-<section class="features5 cid-s8XhrNzhxY" id="features05-g">
-
-
-
-
-    <div class="container">
-        <div class="mbr-section-head row">
-            <div class="col-12">
-                <h3 class="mbr-section-subtitle mbr-fonts-style align-left mb-3 display-4">Works & Events</h3>
-                <h2 class="mbr-section-title mbr-fonts-style align-left mb-5 display-2"><strong>Related and Meaningful</strong>
-                    Experience
-                    </strong></h2>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-lg-4 col-md-6 col-12">
-                <div class="card-wrapper">
-                    <div class="card-box align-left">
-                        <h5 class="card-subtitle mbr-fonts-style align-left display-5">2020</h5>
-                        <h4 class="card-title mbr-fonts-style align-left display-5"><strong>Study Scholarship</strong></h4>
-                        <p class="mbr-text mbr-fonts-style mb-3 display-7">
-                            Have made great progress</p>
-                        <div class="link-wrap">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-12">
-                <div class="card-wrapper">
-                    <div class="card-box align-left">
-                        <h5 class="card-subtitle mbr-fonts-style align-left display-5">2020</h5>
-                        <h4 class="card-title mbr-fonts-style align-left display-5"><strong>Database & Info Sys TA</strong></h4>
-                        <p class="mbr-text mbr-fonts-style mb-3 display-7">
-                          Assistant both online and offline</p>
-                        <div class="link-wrap">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-12">
-                <div class="card-wrapper">
-                    <div class="card-box align-left">
-                        <h5 class="card-subtitle mbr-fonts-style align-left display-5">2021</h5>
-                        <h4 class="card-title mbr-fonts-style align-left display-5"><strong>CiGa Game Jam</strong></h4>
-                        <p class="mbr-text mbr-fonts-style mb-3 display-7">
-                            Develop a game with team partners in 48 hours</p>
-                        <div class="link-wrap">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="counters cid-qwp7wgFXdC" id="features3-35" data-rv-view="3443">
-
-
-
-    <div class="container-fluid">
-        <div class="row justify-content-center align-center">
-            <div class="col-md-4 col-sm-6 stats-item">
-                <span class="mbr-iconfont mbri-users" media-simple="true"></span>
-                <h2 class="heading mbr-card-title mbr-fonts-style display-5">Working with teams</h2>
-                <h3 class="count counter mbr-fonts-style mbr-bold display-2">8</h3>
-                <span>times
-                </span>
-            </div>
-
-            <div class="col-md-4 col-sm-6 stats-item col-lg-4">
-                <span class="mbr-iconfont mbri-clock" media-simple="true"></span>
-                <h2 class="heading mbr-card-title mbr-fonts-style display-5">Learning time</h2>
-                <h3 class="count counter mbr-fonts-style mbr-bold display-2">900</h3>
-                <span>hours
-                </span>
-            </div>
-
-            <div class="col-md-4 col-sm-6 stats-item col-lg-4">
-                <span class="mbr-iconfont mbri-magic-stick" media-simple="true"></span>
-                <h2 class="heading mbr-card-title mbr-fonts-style display-5">
-                   Work Completed
-                </h2>
-                <h3 class="count counter mbr-fonts-style mbr-bold display-2">5</h3>
-                <span>projects
-                </span>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-  <section class="cid-qwp7uHgL4P" id="features1-34" data-rv-view="3440">
-
-
-    <div class="container">
-        <h2 class="mbr-fonts-style mbr-section-title align-center display-2">I'M SPECIALIZED IN</h2>
-         <div class="underline align-center">
-             <div class="line"></div>
-         </div>
-
-
-        <div class="row justify-content-center pt-5">
-            <div class="col-md-6 row-item col-lg-3">
-                <div class="card-img pb-3 align-left">
-                    <span class="mbr-iconfont mbri-edit" media-simple="true"></span>
-                </div>
-                <h4 class="mbr-fonts-style mbr-card-title display-5">Analysis</h4>
-
-                <p class="mbr-text mbr-fonts-style display-7">Analyze the requirements and preferences of users</p>
-            </div>
-
-            <div class="col-md-6 row-item col-lg-3">
-                <div class="card-img pb-3 align-left">
-                    <span class="mbr-iconfont mbri-sites" media-simple="true"></span>
-                </div>
-                <h4 class="mbr-fonts-style mbr-card-title display-5">DESIGN</h4>
-
-                <p class="mbr-text mbr-fonts-style display-7">Passionate with UI/UX design, and creative </div>
-
-            <div class="col-md-6 row-item col-lg-3">
-                <div class="card-img pb-3 align-left">
-                    <span class="mbr-iconfont mbri-photos" media-simple="true"></span>
-                </div>
-                <h4 class="mbr-fonts-style mbr-card-title display-5">FRONT-END</h4>
-                <p class="mbr-text mbr-fonts-style display-7">Oversaw all aspects of workshop job as front-end developer</p>
-            </div>
-
-            <div class="col-md-6 row-item col-lg-3">
-                <div class="card-img pb-3 align-left">
-                    <span class="mbr-iconfont mbri-like" media-simple="true"></span>
-                </div>
-                <h4 class="mbr-fonts-style mbr-card-title display-5">INTERACTION</h4>
-                <p class="mbr-text mbr-fonts-style display-7">Concentrate on build smooth interaction between users and products</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-
-<section class="counters1 counters cid-s8XeIziAPT mbr-parallax-background" id="countres01-4">
-
-
-
-    <div class="mbr-overlay" style="opacity: 0.6; background-color: rgb(255, 255, 255);">
-    </div>
-
-    <div class="container">
-        <div class="row jc-e">
-
-            <div class="col-lg-8 mb-5">
-                <h2 class="title align-left mb-5 mbr-fonts-style display-2"><strong>Creative UI/UX<br>Designs for Website/App</strong></h2>
-            </div>
-
-            <div class="col-lg-5">
-                <div class="row">
-                    <div class="card align-left mb-5 col-12 col-lg-6 col-md-6">
-                        <div class="panel-item">
-                            <div class="card-img">
-
-                                <h3 class="count align-left mbr-fonts-style display-2">10</h3>
-                            </div>
-                            <div class="card-text">
-                                <h4 class="mbr-content-title mbr-fonts-style display-7">Specialized courses</h4>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card align-left mb-5 col-12 col-lg-6 col-md-6">
-                        <div class="panel-item">
-                            <div class="card-img">
-
-                                <h3 class="count align-left mbr-fonts-style display-2">
-                                    5</h3>
-                            </div>
-                            <div class="card-text">
-                                <h4 class="mbr-content-title mbr-fonts-style display-7">
-                                    Creative Design</h4>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card align-left mb-5 col-12 col-lg-6 col-md-6">
-                        <div class="panel-item">
-                            <div class="card-img">
-
-                                <h3 class="count align-left mbr-fonts-style display-2">
-                                    20</h3>
-                            </div>
-                            <div class="card-text">
-                                <h4 class="mbr-content-title mbr-fonts-style display-7">Cooperative Partners</h4>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card align-left mb-5 col-12 col-lg-6 col-md-6">
-                        <div class="panel-item">
-                            <div class="card-img">
-
-                                <h3 class="count align-left mbr-fonts-style display-2">2</h3>
-                            </div>
-                            <div class="card-texts">
-                                <h4 class="mbr-content-title mbr-fonts-style display-7">Products (Website/App)</h4>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="features10 cid-s8XgpbhZNg" id="features010-d">
-
-
-
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-sm-6 col-lg-4">
-                <div class="card-wrap">
-                    <div class="image-wrap">
-                        <img src="static/design/proto.png">
-                    </div>
-                    <div class="content-wrap">
-                        <h5 class="mbr-section-title card-title mbr-fonts-style align-left display-4">Design</h5>
-                        <h6 class="mbr-role mbr-fonts-style align-left mb-2 display-5"><strong>Wireframe & Prototype</strong></h6>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-                <div class="card-wrap card2">
-                    <div class="image-wrap">
-                        <img src="static/design/interaction.png">
-                    </div>
-                    <div class="content-wrap">
-                        <h5 class="mbr-section-title card-title mbr-fonts-style align-left display-4">
-                            Implement</h5>
-                        <h6 class="mbr-role mbr-fonts-style align-left mb-2 display-5"><strong>Smooth Interactions</strong></h6>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-                <div class="card-wrap">
-                    <div class="image-wrap">
-                        <img src="static/design/interface.png">
-                    </div>
-                    <div class="content-wrap">
-                        <h5 class="mbr-section-title card-title mbr-fonts-style align-left display-4">
-                            Develop</h5>
-                        <h6 class="mbr-role mbr-fonts-style align-left mb-2 display-5"><strong>Whole Interfaces</strong></h6>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="features6 cid-s8XeElbghg" id="features06-3">
-
-
-
-
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="row row-center">
-                    <div class="card p-3 col-12">
-
-                        <div class="card-wrapper">
-                            <div class="card-img">
-                                <img src="static/design/Frontend.jpg">
-                            </div>
-                            <div class="card-box">
-
-                                <h4 class="card-title align-center mbr-white mbr-fonts-style display-4">Implement
-                                </h4>
-                                <p class="mbr-text align-center mbr-white mbr-fonts-style display-5"><strong>
-                                    Front-end
-                                </strong></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="row">
-                    <div class="card p-3 col-lg-6 col-12">
-                        <div class="card-wrapper">
-                            <div class="card-img">
-                                <img src="static/design/UserStoryMap.jpg">
-                            </div>
-                            <div class="card-box">
-
-                                <h4 class="card-title align-center mbr-white mbr-fonts-style display-4">
-                                    Analysis</h4>
-                                <p class="mbr-text align-center mbr-white mbr-fonts-style display-5"><strong>User Story Map</strong>
-                                </p>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card p-3 col-lg-6 col-12">
-                        <div class="card-wrapper">
-                            <div class="card-img">
-                                <img src="static/design/UserSitemap.jpg">
-                            </div>
-                            <div class="card-box">
-
-                                <h4 class="card-title align-center mbr-white mbr-fonts-style display-4">
-                                    Draw</h4>
-                                <p class="mbr-text align-center mbr-white mbr-fonts-style display-5"><strong>User Sitemap
-                                        </strong></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card p-3 col-lg-12 col-12">
-                        <div class="card-wrapper">
-                            <div class="card-img">
-                                <img src="static/design/wireframe.jpg">
-                            </div>
-                            <div class="card-box">
-
-                                <h4 class="card-title align-center mbr-white mbr-fonts-style display-4">
-                                    Draw</h4>
-                                <p class="mbr-text align-center mbr-white mbr-fonts-style display-5"><strong>Wireframe Graph</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="row">
-                    <div class="card p-3 col-12">
-                        <div class="card-wrapper">
-                            <div class="card-img">
-                                <img src="static/design/UserJourney.jpg">
-                            </div>
-                            <div class="card-box">
-
-                                <h4 class="card-title align-center mbr-white mbr-fonts-style display-4">
-                                    Plan</h4>
-                                <p class="mbr-text align-center mbr-white mbr-fonts-style display-5"><strong>User Journey Scheme</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card p-3 col-12">
-                         <div class="card-wrapper">
-                            <div class="card-img">
-                                <img src="static/design/Homepage.jpg">
-                            </div>
-                            <div class="card-box">
-
-                                <h4 class="card-title align-center mbr-white mbr-fonts-style display-4">
-                                    Design</h4>
-                                <p class="mbr-text align-center mbr-white mbr-fonts-style display-5"><strong>Prototype
-                                </strong><br></p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-
-
-  <section class="contacts2 cid-s8XeQBvHsp" >
-
-
-    <div class="container">
-       <div class="row justify-content-center">
-            <div class="title col-md-12 col-lg-12">
-
-                <div class="align-wrapper align-left">
-                    <h3 class="mbr-section-text align-left mbr-fonts-style mb-4 display-2"><strong>
-                            These are my works</strong></h3>
-                </div>
-               <h3 class="mbr-section-title mbr-fonts-style align-left pb-5 display-5">
-                   Hope you enjoy
-                </h3>
-            </div>
-
-        </div>
-
-        </div>
-
-
-
-</section>
-
-<section class="video1 cid-s8XhLaqV5G mbr-parallax-background" id="worksdemo" style="background-image: url(static/image/background4.jpg)" >
-
-    <div class="mbr-overlay" style="opacity: 0; background-color: rgb(255, 255, 255);">
-    </div>
-    <div class="align-center container">
-        <div class="mbr-section-head">
-
-
-        </div>
-        <div class="row justify-content-center mt-4">
-            <div class="col-12 col-lg-">
-                <div class="box">
-                    <div class="mbr-media show-modal align-center" data-modal=".modalWindow">
-                        <div class="icon-wrap">
-                            <a class="" href="#"><span class="mbr-iconfont mobi-mbri-right mobi-mbri"></span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div>
-        <div class="modalWindow" style="display: none;">
-            <div class="modalWindow-container">
-                <div class="modalWindow-video-container">
-                    <div class="modalWindow-video">
-                        <iframe width="100%" height="100%" frameborder="10" allowfullscreen="1" data-src="https://youtu.be/hruApIuRvS4" ></iframe>
-                    </div>
-                    <a class="close" role="button" data-dismiss="modal">
-                        <span aria-hidden="true" class="mbr-iconfont mobi-mbri-close mobi-mbri closeModal"></span>
-                        <span class="sr-only">Close</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-  <section class="contacts2 cid-s8XeQBvHsp" >
-
-
-    <div class="container">
-       <div class="row justify-content-center">
-            <div class="title col-md-12 col-lg-12">
-
-
-            </div>
-
-        </div>
-
-        </div>
-
-
-
-</section>
-
-<section class="video1 cid-s8XhLaqV5G mbr-parallax-background" style="background-image: url(static/image/background1.jpg)"  id="video01-j">
-
-    <div class="mbr-overlay" style="opacity: 0; background-color: rgb(255, 255, 255);">
-    </div>
-    <div class="align-center container">
-        <div class="mbr-section-head">
-
-
-        </div>
-        <div class="row justify-content-center mt-4">
-            <div class="col-12 col-lg-">
-                <div class="box">
-                    <div class="mbr-media show-modal align-center" data-modal=".modalWindow">
-                        <div class="icon-wrap">
-                            <a class="" href="#"><span class="mbr-iconfont mobi-mbri-right mobi-mbri"></span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div>
-        <div class="modalWindow" style="display: none;">
-            <div class="modalWindow-container">
-                <div class="modalWindow-video-container">
-                    <div class="modalWindow-video">
-                        <iframe width="100%" height="100%" frameborder="10" allowfullscreen="1" data-src="https://youtu.be/Luf1UKResyM" ></iframe>
-                    </div>
-                    <a class="close" role="button" data-dismiss="modal">
-                        <span aria-hidden="true" class="mbr-iconfont mobi-mbri-close mobi-mbri closeModal"></span>
-                        <span class="sr-only">Close</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="contacts2 cid-s8XeQBvHsp" id="contacts02-6">
-
-
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="title col-md-12 col-lg-12">
-                <h3 class="mbr-section-title mbr-fonts-style align-left pb-5 display-5">Let’s get in touch, it's just as
-                    easy as writing an email:</h3>
-                <div class="align-wrapper align-left">
-                    <h4 class="mbr-section-text align-left mbr-fonts-style mb-4 display-2"><strong>
-                            freja.kong@outlook.com</strong></h4>
-                </div>
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-</section>
-<section class="footer1 cid-s8XeTELmcE" once="footers" id="footer02-9">
-
-
-
-</section>
-
-
-  <script src="static/js/jquery.min.js"></script>
-  <script src="static/js/popper.min.js"></script>
-  <script src="static/js/tether.min.js"></script>
-  <script src="static/js/bootstrap.min4.js"></script>
-  <script src="static/js/smooth-scroll2.js"></script>
-  <script src="static/js/nav-dropdown2.js"></script>
-  <script src="static/js/navbar-dropdown2.js"></script>
-  <script src="static/js/jquery.touch-swipe.min.js"></script>
-  <script src="static/js/jquery.viewportchecker.js"></script>
-  <script src="static/js/jarallax.min.js"></script>
-  <script src="static/js/vimeo_player1.js"></script>
-  <script src="static/js/bootstrap-carousel-swipe2.js"></script>
-  <script src="static/js/mbr-testimonials-slider1.js"></script>
-  <script src="static/js/script26.js"></script>
-
-  <script src="static/js/jquery.min2.js"></script>
-  <script src="static/js/popper.min.js"></script>
-  <script src="static/js/tether.min.js"></script>
-  <script src="static/js/bootstrap.min10.js"></script>
-  <script src="static/js/typed.min1.js"></script>
-  <script src="static/js/jquery.touch-swipe.min.js"></script>
-  <script src="static/js/smooth-scroll7.js"></script>
-  <script src="static/js/jquery.viewportchecker5.js"></script>
-  <script src="static/js/social-likes3.js"></script>
-  <script src="static/js/script.min1.js"></script>
-  <script src="static/js/jarallax.min5.js"></script>
-  <script src="static/js/script63.js"></script>
-
-
+</footer>
 </body>
 </html>
-
-
