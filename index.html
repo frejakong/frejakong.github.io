@@ -1,432 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fanyu Kong - UI/UX Designer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fanyu Kong — Portfolio</title>
+    <meta name="description" content="Yura / Fanyu Kong — UX · Game UI · Audio UX · HCI Portfolio" />
     <style>
-        :root {
-            --primary-bg: #0a0a0a;
-            --secondary-bg: #1a1a1a;
-            --text-color: #ffffff;
-            --neon-pink: #ff00ff;
-            --neon-blue: #00ffff;
-            --neon-green: #00ff00;
-            --transition: all 0.3s ease;
+        :root{
+            --bg:#ffffff; --ink:#111315; --muted:#636b7a; --line:rgba(0,0,0,.08);
+            --accent:#0aa398; --accent-2:#ff6a14; --maxw:1100px; --gutter:clamp(16px,3vw,28px);
+            --radius:20px; --shadow:0 12px 36px rgba(20,24,40,.06);
         }
+        *{box-sizing:border-box}
+        body{margin:0; color:var(--ink); background:#fff; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", "Noto Sans CJK", "PingFang SC", Arial, Helvetica, sans-serif; line-height:1.55; -webkit-font-smoothing:antialiased}
+        a{color:inherit; text-decoration:none}
+        .wrap{width:min(100% - 2*var(--gutter), var(--maxw)); margin:0 auto}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(150%) blur(10px); background:rgba(255,255,255,.9); border-bottom:1px solid var(--line)}
+        .nav{display:flex; align-items:center; justify-content:space-between; padding:12px var(--gutter)}
+        .nav .brand{font-weight:800; letter-spacing:.4px}
+        .nav .links{display:flex; gap:14px; align-items:center}
+        .btn{padding:10px 14px; border:1px solid var(--line); border-radius:999px; background:#fff; transition:.2s}
+        .btn:hover{border-color:var(--accent); color:var(--accent)}
 
-        body {
-            font-family: 'Press Start 2P', cursive;
-            background-color: var(--primary-bg);
-            color: var(--text-color);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+        section{padding:80px var(--gutter)}
+        .eyebrow{letter-spacing:.5px; text-transform:lowercase; color:#000; font-weight:800; margin:0 0 10px; font-size:22px}
+        h2{font-size:clamp(22px,3.5vw,32px); margin:0 0 12px}
+        .muted{color:var(--muted)}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        /* Hero */
+        .hero{padding:80px var(--gutter) 60px; border-bottom:1px solid var(--line)}
+        .hero-grid{display:grid; grid-template-columns: 1fr auto; align-items:start; gap:20px}
+        .hero-title{font-size:clamp(42px,10vw,120px); margin:0; font-weight:900; line-height:1}
+        .avatar{width:120px; height:120px; border-radius:999px; overflow:hidden; border:1px solid var(--line); background:#f3f5f8 url('image/profile.jpeg') center/cover no-repeat}
+        .hero-info{margin-top:20px}
+        .hero-info .email{margin-bottom:10px}
+        .hero-info .email a{color:var(--accent); font-weight:600}
+        .availability{display:flex; align-items:center; gap:8px; margin-bottom:16px}
+        .dot{width:12px; height:12px; border-radius:12px; background:radial-gradient(circle at 30% 30%, var(--accent), #0a826f)}
+        .intro{max-width:50ch; font-size:18px; line-height:1.5; color:var(--muted)}
 
-        header {
-            background-color: rgba(10, 10, 10, 0.8);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-        }
+        .work-list{display:grid; gap:32px; margin-top:30px}
+        .work-card{border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); background:#fff; transition:transform .25s, box-shadow .25s}
+        .work-card:hover{transform:translateY(-6px); box-shadow:0 16px 40px rgba(0,0,0,.12)}
+        .work-thumb{aspect-ratio:16/9; overflow:hidden}
+        .work-thumb img{width:100%; height:100%; object-fit:cover; display:block}
+        .work-content{padding:20px}
+        .work-content h3{margin:0 0 6px; font-size:20px}
+        .work-content h4{ color:var(--accent)}
+        .work-content p{margin:0; color:var(--muted)}
 
-        nav ul {
-            display: flex;
-            justify-content: center;
-            list-style-type: none;
-            padding: 20px 0;
-        }
+        .illus-grid{display:grid; gap:16px; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); margin-top:24px}
+        .illus-card{border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); background:#fafafa; box-shadow:var(--shadow)}
+        .illus-card img{width:100%; height:auto; display:block}
 
-        nav ul li {
-            margin: 0 15px;
-        }
+        footer{padding:30px var(--gutter); border-top:1px solid var(--line); color:var(--muted); text-align:center}
 
-        nav ul li a {
-            color: var(--text-color);
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: var(--transition);
-            position: relative;
-            padding: 5px 0;
-        }
-
-        nav ul li a::before {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--neon-pink);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-            box-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink), 0 0 15px var(--neon-pink);
-        }
-
-        nav ul li a:hover::before {
-            transform: scaleX(1);
-        }
-
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 3;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px var(--neon-blue), -2px -2px var(--neon-pink);
-            animation: textFlicker 2s infinite alternate;
-        }
-
-        .hero p {
-            font-size: 1rem;
-            margin-bottom: 30px;
-            animation: neonPulse 1.5s infinite alternate;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: rgba(0, 255, 0, 0.2);
-            color: var(--neon-green);
-            padding: 12px 30px;
-            border: 2px solid var(--neon-green);
-            text-decoration: none;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            text-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green);
-            box-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green);
-        }
-
-        .btn:hover {
-            background-color: var(--neon-green);
-            color: var(--primary-bg);
-            text-shadow: none;
-        }
-
-        .pixel-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image:
-                    linear-gradient(to right, rgba(26, 26, 26, 0.1) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(26, 26, 26, 0.1) 1px, transparent 1px);
-            background-size: 20px 20px;
-            z-index: 2;
-            background-color: rgba(0, 0, 0, 0.6);
-        }
-
-
-        .about {
-            padding: 100px 0;
-            background-color: var(--secondary-bg);
-        }
-
-        .about-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .about-text {
-            flex: 1;
-            padding-right: 50px;
-        }
-
-        .about-text h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px var(--neon-blue), -2px -2px var(--neon-pink);
-        }
-
-        .about-text h3{
-
-            margin: 20px;
-            color: var(--neon-blue);
-        }
-
-        .about-text h4{
-
-            margin: 15px;
-            color: var(--neon-pink);
-        }
-
-        .about-image {
-            flex: 1;
-            text-align: center;
-        }
-
-        .about-image img {
-            max-width: 100%;
-            border: 2px solid var(--neon-blue);
-            box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
-            image-rendering: pixelated;
-        }
-
-        .work {
-            padding: 100px 0;
-        }
-
-        .work h2 {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 50px;
-            text-shadow: 2px 2px var(--neon-blue), -2px -2px var(--neon-pink);
-        }
-
-        .work-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .work-item {
-            background-color: var(--secondary-bg);
-            border: 2px solid var(--neon-pink);
-            overflow: hidden;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .work-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--neon-pink), transparent);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .work-item:hover::before {
-            opacity: 0.3;
-        }
-
-        .work-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
-        }
-
-        .work-item video {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .work-item-content {
-            padding: 20px;
-        }
-
-        .work-item h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: var(--neon-blue);
-        }
-
-        footer {
-            background-color: var(--secondary-bg);
-            text-align: center;
-            padding: 30px 0;
-            border-top: 2px solid var(--neon-green);
-        }
-
-        @keyframes textFlicker {
-            0%, 100% {
-                text-shadow: 2px 2px var(--neon-blue), -2px -2px var(--neon-pink);
-            }
-            50% {
-                text-shadow: 2px 2px var(--neon-pink), -2px -2px var(--neon-blue);
-            }
-        }
-
-        @keyframes neonPulse {
-            from {
-                text-shadow: 0 0 5px var(--text-color), 0 0 10px var(--text-color);
-            }
-            to {
-                text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue), 0 0 15px var(--neon-blue);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 0.8rem;
-            }
-
-            .about-content {
-                flex-direction: column;
-            }
-
-            .about-text {
-                padding-right: 0;
-                margin-bottom: 30px;
-            }
-        }
+        [data-animate]{opacity:0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease}
+        [data-animate].on{opacity:1; transform:none}
     </style>
 </head>
 <body>
 <header>
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#work">Work</a></li>
-        </ul>
+    <nav class="nav wrap">
+        <div class="brand">FANYU KONG</div>
+        <div class="links">
+            <a class="btn" href="#work">work</a>
+            <a class="btn" href="#about">about</a>
+            <a class="btn" href="#illustration">illustration</a>
+            <a class="btn" href="#contact">contact</a>
+        </div>
     </nav>
 </header>
 
-<main>
-    <section id="home" class="hero">
-        <video class="hero-video" autoplay loop muted playsinline>
-            <source src="/video/background.mp4" type="video/mp4">
-        </video>
-        <div class="pixel-overlay"></div>
-        <div class="hero-content">
-            <h1>Fanyu Kong</h1>
-            <p>Former Software Engineer Transitioning to UI/UX Design</p>
-            <p>Healthcare Advocate</p>
-            <p>Passionate about Social Impact & Marginalized Communities</p>
-
-            <a href="#work" class="btn">View My Work</a>
-        </div>
-    </section>
-
-    <section id="about" class="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2>About Me</h2>
-                    <h3>Education</h3>
-                    <h4>University of Ottawa, Ottawa, ON, Canada</h4>
-                    <p><strong>Master of Digital Transformation and Innovation, Concentration UX Design</strong><br>
-                        Jan 2023 – Aug 2024
-                    </p>
-
-                    <h4>University College Dublin, Dublin, Ireland</h4>
-                    <p><strong>Bachelor of Science - Software Engineering</strong><br>
-                        Sept 2018 – Jun 2022
-                    </p>
-
-                    <h3>Work Experience</h3>
-
-                    <h4>UI/UX Designer (Volunteer), AImpower.org (Remote)</h4>
-                    <p>Nov 2023 – Present</p>
-                    <p>Designed inclusive technologies that empower structurally marginalized communities with Figma and Adobe XD.
-                    </p>
-
-                    <h4>UI/UX Designer and Front-end Developer (Internship), Research Center of Digital Humanities of Peking University (Remote)</h4>
-                    <p>Mar 2022 – Dec 2022</p>
-                    <p> Developed front-end business solutions using HTML, CSS, and Vue.js.<br>
-                        Collaborated with product managers and designers to fulfill product requirements.<br>
-                        Assisted back-end developers in interface debugging and functionality testing.
-                    </p>
-                </div>
-
-
-                <div class="about-image">
-                    <img src="/image/me.JPG?height=300&width=300" alt="Your Name">
-                </div>
+<section class="hero">
+    <div class="wrap hero-grid">
+        <div>
+            <h1 class="hero-title" data-animate>FANYU<br>KONG</h1>
+            <div class="hero-info">
+                <div class="email" data-animate><a href="mailto:fanyu-kong@outlook.com">fanyu-kong@outlook.com</a></div>
+                <div class="availability" data-animate><span class="dot"></span><span class="muted">Available for work</span></div>
+                <p class="intro" data-animate>UX/UI designer with a background in software engineering and a Master’s in UX design. Focused on inclusive, research-driven experiences that merge clarity and emotion.</p>
             </div>
         </div>
-    </section>
+        <div class="avatar" data-animate></div>
+    </div>
+</section>
 
-    <section id="work" class="work">
-        <div class="container">
-            <h2>My Work</h2>
-            <div class="work-grid">
-                <div class="work-item">
-                    <video src="/video/to-do%20rpg.mov" controls></video>
-                    <div class="work-item-content">
-                        <h3>To-Do RPG (2024)</h3>
-                        <p>A UX design renovation for my To-Do RPG (2021) project.  </div>
-                </div>
-
-
-                <div class="work-item">
-                    <video src="/video/e_hospital.mp4" controls></video>
-                    <div class="work-item-content">
-                        <h3>e-Hospital</h3>
-                        <p>A digital healthcare platform designed to enhance user experience and streamline patient interactions. As a UI/UX Designer and Front-end Developer, I utilized Figma for interface design and implemented the front-end using React.js, focusing on creating an intuitive user journey and optimized project architecture. </div>  
-                </div>
-
-
-                
-               <div class="work-item">
-                    <video src="/video/trainhunter.mp4" controls></video>
-                    <div class="work-item-content">
-                        <h3>Train Hunter</h3>
-                        <p>Train Hunter is a top-down multiplayer party game where I took on roles as the game designer, leader, and artist. Players control small horses to stop runaway trains. The game combines fun gameplay with a hidden metaphor about machines going wild and the reversal of roles between humans and technology.</div>
-                </div>
-
-                   <div class="work-item">
-                    <video src="/video/app.mp4" controls></video>
-                    <div class="work-item-content">
-                        <h3>To-Do RPG (2021)</h3>
-                        <p>A mobile application that integrates a to-do list with role-playing game elements, offering users an engaging way to manage tasks. My work included designing wireframes, developing the application’s main framework, and implementing interactive features using Java. </div>
-                </div>
-
-                <div class="work-item">
-                    <video src="/video/bouquetpickup.mp4" controls></video>
-                    <div class="work-item-content">
-                        <h3>Bouquet Pickup</h3>
-                        <p>An online flower shop developed as part of my software engineering coursework, "Bouquet Pickup" offers a seamless shopping experience for floral arrangements. My role involved analyzing user requirements, creating wireframes and prototypes, and conducting front-end development with Django.</div>
-                </div>
-
-             
+<section id="about">
+    <div class="wrap about">
+        <p class="eyebrow">about.</p>
+        <div class="grid" style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start">
+            <div>
+                <p data-animate>I explore the intersection of audio, emotion, and interaction. With experience in e-health, nonprofit, and cultural heritage projects, my goal is to design systems that not only work but also resonate. </p>
+            </div>
+            <div>
+                <h2>Skills</h2>
+                <ul class="muted" data-animate>
+                    <li>UX/UI Design</li>
+                    <li>UX Research · Usability Testing · IA & Flows</li>
+                    <li>Game UI (Unity)</li>
+                    <li>Audio UI / HCI</li>
+                    <li>Wireframing · Prototyping · Motion</li>
+                    <li>Accessibility (WCAG) · Inclusive Design</li>
+                    <li>Frontend collaboration (HTML/CSS · JavaScript · React.js ·Vue.js )</li>
+                </ul>
             </div>
         </div>
-    </section>
-</main>
+    </div>
+</section>
+
+<section id="work">
+    <div class="wrap">
+        <p class="eyebrow">work.</p>
+        <div class="work-list">
+            <a class="work-card" href="https://www.e-hospital.ca" target="_blank" data-animate>
+                <div class="work-thumb"><img src="image/e-hospital.png" alt="e-Hospital"/></div>
+                <div class="work-content">
+                    <h3>e-Hospital</h3>
+                    <p>Accessible healthcare platform · +27% task completion</p>
+                    <h4>Website → </h4>
+                </div>
+            </a>
+            <a class="work-card" href="https://rarebib.pkudh.org" target="_blank" data-animate>
+                <div class="work-thumb"><img src="image/rare_book.png" alt="Rare-Book Search"/></div>
+                <div class="work-content">
+                    <h3>Rare-Book Search</h3>
+                    <p>Digital humanities platform · 13,026 rare book volumes from 485 institutions and private collections nationwide</p>
+                    <h4>Website → </h4>
+                </div>
+            </a>
+            <a class="work-card" href="#" data-animate>
+                <div class="work-thumb"><img src="image/to-do_rpg.png" alt="To-Do RPG"/></div>
+                <div class="work-content">
+                    <h3>To-Do RPG</h3>
+                    <p>Gamified prototype for daily tasks</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section id="illustration">
+    <div class="wrap">
+        <p class="eyebrow">illustration.</p>
+        <div class="illus-grid">
+            <div class="illus-card" data-animate><img src="image/illustrate_1.jpeg" alt="Night Overpass"/></div>
+            <div class="illus-card" data-animate><img src="image/illustrate_2.jpeg" alt="Mint Sea"/></div>
+            <div class="illus-card" data-animate><img src="image/illustrate_3.jpeg" alt="Gravity Light"/></div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="wrap">
+        <p class="eyebrow">contact.</p>
+        <h2 data-animate>fanyu-kong@outlook.com</h2>
+          <p data-animate>
+            <a href="mailto:fanyu-kong@outlook.com" class="btn" style="border-color:var(--accent);">Email me</a>
+            </p>
+    </div>
+</section>
 
 <footer>
-    <div class="container">
-        <p>&copy; Fanyu Kong. All rights reserved.</p>
-        <p>Email: freja.kong@outlook.com</p>
-    </div>
+    <div class="wrap">© <span id="year"></span> Fanyu Kong</div>
 </footer>
+
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const els = Array.from(document.querySelectorAll('[data-animate]'));
+    const io = new IntersectionObserver((ents)=>{
+        ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target);} });
+    }, {threshold:.16});
+    els.forEach(el=> io.observe(el));
+</script>
 </body>
 </html>
