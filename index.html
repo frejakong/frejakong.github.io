@@ -10,20 +10,27 @@
             --bg:#ffffff; --ink:#111315; --muted:#636b7a; --line:rgba(0,0,0,.08);
             --accent:#0aa398; --accent-2:#ff6a14; --maxw:1100px; --gutter:clamp(16px,3vw,28px);
             --radius:20px; --shadow:0 12px 36px rgba(20,24,40,.06);
+            /* Smooth-scroll: declare nav height so we can offset anchors cleanly */
+            --navh:60px;
         }
+        @media (min-width: 768px){
+            :root{ --navh:66px; }
+        }
+
         *{box-sizing:border-box}
+        html{scroll-behavior:smooth} /* Smooth native scrolling */
         body{margin:0; color:var(--ink); background:#fff; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", "Noto Sans CJK", "PingFang SC", Arial, Helvetica, sans-serif; line-height:1.55; -webkit-font-smoothing:antialiased}
         a{color:inherit; text-decoration:none}
         .wrap{width:min(100% - 2*var(--gutter), var(--maxw)); margin:0 auto}
 
         header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(150%) blur(10px); background:rgba(255,255,255,.9); border-bottom:1px solid var(--line)}
-        .nav{display:flex; align-items:center; justify-content:space-between; padding:12px var(--gutter)}
+        .nav{display:flex; align-items:center; justify-content:space-between; padding:12px var(--gutter); min-height:var(--navh)} /* lock a stable header height */
         .nav .brand{font-weight:800; letter-spacing:.4px}
         .nav .links{display:flex; gap:14px; align-items:center}
         .btn{padding:10px 14px; border:1px solid var(--line); border-radius:999px; background:#fff; transition:.2s}
         .btn:hover{border-color:var(--accent); color:var(--accent)}
 
-        section{padding:80px var(--gutter)}
+        section{padding:80px var(--gutter); scroll-margin-top:calc(var(--navh) + 12px)} /* anchor targets land below sticky header */
         .eyebrow{letter-spacing:.5px; text-transform:lowercase; color:#000; font-weight:800; margin:0 0 10px; font-size:22px}
         h2{font-size:clamp(22px,3.5vw,32px); margin:0 0 12px}
         .muted{color:var(--muted)}
@@ -41,7 +48,7 @@
         .intro{max-width:50ch; font-size:18px; line-height:1.5; color:var(--muted)}
 
         .work-list{display:grid; gap:32px; margin-top:30px}
-        .work-card{border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); background:#fff; transition:transform .25s, box-shadow .25s}
+        .work-card{border:none; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); background:#fff; transition:transform .25s, box-shadow .25s}
         .work-card:hover{transform:translateY(-6px); box-shadow:0 16px 40px rgba(0,0,0,.12)}
         .work-thumb{aspect-ratio:16/9; overflow:hidden}
         .work-thumb img{width:100%; height:100%; object-fit:cover; display:block}
@@ -51,13 +58,17 @@
         .work-content p{margin:0; color:var(--muted)}
 
         .illus-grid{display:grid; gap:16px; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); margin-top:24px}
-        .illus-card{border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); background:#fafafa; box-shadow:var(--shadow)}
+        .illus-card{border-radius:var(--radius); overflow:hidden; border:none
+        ; background:#fafafa; box-shadow:var(--shadow)}
         .illus-card img{width:100%; height:auto; display:block}
 
         footer{padding:30px var(--gutter); border-top:1px solid var(--line); color:var(--muted); text-align:center}
 
         [data-animate]{opacity:0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease}
         [data-animate].on{opacity:1; transform:none}
+
+        /* Optional: highlight active nav item during scroll */
+        .nav .links a.active{border-color:var(--accent); color:var(--accent)}
     </style>
 </head>
 <body>
@@ -155,9 +166,9 @@
     <div class="wrap">
         <p class="eyebrow">contact.</p>
         <h2 data-animate>fanyu-kong@outlook.com</h2>
-          <p data-animate>
+        <p data-animate>
             <a href="mailto:fanyu-kong@outlook.com" class="btn" style="border-color:var(--accent);">Email me</a>
-            </p>
+        </p>
     </div>
 </section>
 
@@ -167,11 +178,48 @@
 
 <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reveal-on-scroll animation
     const els = Array.from(document.querySelectorAll('[data-animate]'));
     const io = new IntersectionObserver((ents)=>{
         ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target);} });
     }, {threshold:.16});
     els.forEach(el=> io.observe(el));
+
+    // Smooth-scroll with sticky header offset (for consistent behavior across browsers)
+    const header = document.querySelector('header');
+    const links = document.querySelectorAll('.nav .links a[href^="#"]');
+    function getHeaderH(){
+        const styles = getComputedStyle(document.documentElement);
+        const cssVar = parseInt(styles.getPropertyValue('--navh')) || 60;
+        return Math.max(cssVar, header.getBoundingClientRect().height);
+    }
+    links.forEach(a=>{
+        a.addEventListener('click', (e)=>{
+            const id = a.getAttribute('href');
+            if(!id || id === '#') return;
+            const target = document.querySelector(id);
+            if(!target) return;
+            e.preventDefault();
+            const top = target.getBoundingClientRect().top + window.pageYOffset - getHeaderH() - 12;
+            window.scrollTo({ top, behavior:'smooth' });
+        });
+    });
+
+    // Optional: highlight active nav link while scrolling
+    const sections = [...document.querySelectorAll('section[id]')];
+    const spy = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+            const id = entry.target.getAttribute('id');
+            const link = document.querySelector(`.nav .links a[href="#${id}"]`);
+            if(!link) return;
+            if(entry.isIntersecting){
+                document.querySelectorAll('.nav .links a').forEach(x=>x.classList.remove('active'));
+                link.classList.add('active');
+            }
+        });
+    }, { rootMargin: `-${getHeaderH()+20}px 0px -60% 0px`, threshold: 0.1 });
+    sections.forEach(sec=> spy.observe(sec));
 </script>
 </body>
 </html>
