@@ -1,355 +1,1176 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Fanyu Kong — Exhibition of Interactions</title>
-    <meta name="description" content="Yura / Fanyu Kong — UX · Game UI · Audio UX · HCI Portfolio" />
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>FANYU KONG · portfolio.exe</title>
+    <meta name="description" content="A pixel-art visual novel portfolio by Fanyu Kong, UX/UI designer." />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DotGothic16&family=VT323&display=swap" rel="stylesheet">
     <style>
-        :root {
-            /* 恢復原本的高級夢核色系：骨白、炭黑、迷離的灰藍與琥珀色 */
-            --bg: #eceae4;
-            --ink: #141414;
-            --muted: #888888;
-            --accent-1: rgba(144, 160, 180, 0.4);
-            --accent-2: rgba(220, 150, 120, 0.2);
-            --font-serif: 'Cormorant Garamond', serif;
-            --font-sans: 'Inter', sans-serif;
-            --nav-padding: 40px;
+        :root{
+            --bg-0:#0a0418;
+            --bg-1:#1a0d3d;
+            --bg-2:#2d1660;
+            --ink:#e8e1ff;
+            --ink-dim:#9b8fcf;
+            --accent:#c084ff;
+            --accent-2:#7df9c4;
+            --accent-3:#ffb84d;
+            --danger:#ff5577;
+            --frame:#c084ff;
+            --frame-dark:#4a2b8c;
+            --pixel:2px;
         }
 
-        /* 基礎重置與平滑滾動 */
-        * { box-sizing: border-box; cursor: none; /* 隱藏默認鼠標以使用自定義游標 */ }
-        html { scroll-behavior: smooth; font-size: 16px; }
-        body {
-            margin: 0; padding: 0;
-            background-color: var(--bg);
-            color: var(--ink);
-            font-family: var(--font-sans);
-            line-height: 1.6;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+        *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+        html,body{height:100%;overflow:hidden;background:#000}
+        body{
+            font-family:'DotGothic16','Press Start 2P',monospace;
+            color:var(--ink);
+            image-rendering:pixelated;
+            -webkit-font-smoothing:none;
+            font-smooth:never;
+            user-select:none;
+            touch-action:manipulation;
         }
-        a { color: inherit; text-decoration: none; }
+        button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 
-        /* 視覺噪點 (電影感/夢核特徵) */
-        .noise {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: 9999; opacity: 0.04;
-            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+        /* ========== STARFIELD BG ========== */
+        #stage{
+            position:fixed;inset:0;
+            background:
+                    radial-gradient(ellipse at 50% 30%, #3a1a7a 0%, #1a0d3d 35%, #0a0418 70%, #000 100%);
+            overflow:hidden;
         }
-
-        /* 夢境漸變背景光暈 */
-        .dream-orb {
-            position: fixed; border-radius: 50%; filter: blur(80px);
-            z-index: -1; animation: float 25s infinite alternate ease-in-out;
+        .stars{position:absolute;inset:0;pointer-events:none}
+        .stars::before,.stars::after{
+            content:'';position:absolute;inset:0;
+            background-image:
+                    radial-gradient(1px 1px at 12% 18%, #fff 100%, transparent),
+                    radial-gradient(1px 1px at 27% 62%, #fff 100%, transparent),
+                    radial-gradient(1px 1px at 43% 31%, #d9c8ff 100%, transparent),
+                    radial-gradient(1px 1px at 58% 79%, #fff 100%, transparent),
+                    radial-gradient(1px 1px at 71% 22%, #fff 100%, transparent),
+                    radial-gradient(1px 1px at 84% 55%, #d9c8ff 100%, transparent),
+                    radial-gradient(1px 1px at 91% 88%, #fff 100%, transparent),
+                    radial-gradient(1px 1px at 8% 84%, #fff 100%, transparent),
+                    radial-gradient(1px 1px at 35% 7%, #fff 100%, transparent),
+                    radial-gradient(1px 1px at 65% 48%, #fff 100%, transparent),
+                    radial-gradient(2px 2px at 19% 41%, #c084ff 100%, transparent),
+                    radial-gradient(2px 2px at 77% 73%, #7df9c4 100%, transparent);
+            background-size:100% 100%;
+            animation:twinkle 4s steps(8) infinite;
         }
-        .orb-1 { width: 50vw; height: 50vw; background: var(--accent-1); top: -10%; left: -10%; }
-        .orb-2 { width: 40vw; height: 40vw; background: var(--accent-2); bottom: 10%; right: -5%; animation-delay: -10s; }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(10vw, 5vh) scale(1.2); }
+        .stars::after{
+            background-position:50px 30px;
+            animation-duration:6s;
+            animation-direction:reverse;
+            opacity:.7;
         }
-
-        /* 自定義游標 (反色效果) */
-        .cursor {
-            position: fixed; top: 0; left: 0; width: 16px; height: 16px;
-            background: var(--ink); border-radius: 50%;
-            pointer-events: none; z-index: 10000;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, background 0.3s;
-            mix-blend-mode: difference;
-        }
-        .cursor.hovering { width: 60px; height: 60px; background: #fff; }
-
-        /* 四角導航 (日式現代美術館佈局) */
-        .fixed-nav {
-            position: fixed; top: var(--nav-padding); left: var(--nav-padding); right: var(--nav-padding);
-            display: flex; justify-content: space-between; align-items: flex-start;
-            z-index: 50; pointer-events: none;
-        }
-        .fixed-nav > * { pointer-events: auto; }
-        .brand {
-            font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600;
-            letter-spacing: 0.05em; line-height: 1;
-        }
-        .nav-links {
-            display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
-            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 500;
-        }
-        .nav-links a { position: relative; padding-bottom: 2px; }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
-            background: var(--ink); transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .nav-links a:hover::after { width: 100%; }
-
-        /* 通用佈局 */
-        section { min-height: 100vh; padding: 15vh 10vw; position: relative; }
-        .eyebrow {
-            font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.3em;
-            text-transform: uppercase; color: var(--muted); margin-bottom: 2rem;
+        @keyframes twinkle{
+            0%,100%{opacity:1}
+            50%{opacity:.3}
         }
 
-        /* Hero 區塊 */
-        .hero { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
-        .hero-title {
-            font-family: var(--font-serif); font-size: clamp(4rem, 12vw, 10rem);
-            line-height: 0.9; margin: 0; font-weight: 300; font-style: italic;
-            position: relative; left: -1vw;
+        /* Falling sparkle */
+        .sparkle{
+            position:absolute;
+            width:8px;height:8px;
+            background:#fff;
+            clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);
+            filter:drop-shadow(0 0 4px #c084ff) drop-shadow(0 0 8px #c084ff);
+            animation:float 8s ease-in-out infinite;
+            pointer-events:none;
         }
-        .hero-subtitle {
-            margin-top: 4vh; max-width: 45ch; font-size: 1.1rem; line-height: 1.8;
-            font-weight: 300; color: #444;
-        }
-        .availability {
-            display: inline-flex; align-items: center; gap: 12px; margin-top: 3rem;
-            font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
-        }
-        .dot {
-            width: 8px; height: 8px; border-radius: 50%; background: #28a745;
-            box-shadow: 0 0 12px rgba(40,167,69,0.5); animation: pulse 2s infinite;
+        @keyframes float{
+            0%,100%{transform:translateY(0) rotate(0deg);opacity:.8}
+            50%{transform:translateY(-15px) rotate(180deg);opacity:1}
         }
 
-        @keyframes pulse {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1); }
+        /* ========== CRT SCANLINES ========== */
+        #scanlines{
+            position:fixed;inset:0;
+            pointer-events:none;
+            z-index:9000;
+            background:
+                    repeating-linear-gradient(
+                            0deg,
+                            rgba(0,0,0,.15) 0px,
+                            rgba(0,0,0,.15) 1px,
+                            transparent 1px,
+                            transparent 3px
+                    );
+            mix-blend-mode:multiply;
+        }
+        #vignette{
+            position:fixed;inset:0;
+            pointer-events:none;
+            z-index:9001;
+            background:radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,.6) 100%);
         }
 
-        /* About 區塊 - 垂直排版 */
-        .about-grid {
-            display: grid; grid-template-columns: 1fr 2fr; gap: 10vw; align-items: start;
+        /* ========== SCREEN ROOT ========== */
+        .screen{
+            position:fixed;inset:0;
+            display:none;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            padding:24px 20px;
+            z-index:10;
         }
-        .vertical-text {
-            writing-mode: vertical-rl; text-orientation: mixed;
-            font-family: var(--font-serif); font-size: 2.5rem; line-height: 1.4;
-            height: 60vh; font-style: italic; font-weight: 300; color: var(--ink);
-        }
-        .skills-container { margin-top: auto; padding-top: 10vh; }
-        .skills-list {
-            list-style: none; padding: 0; margin: 0;
-            display: flex; flex-direction: column; gap: 1.5rem;
-        }
-        .skills-list li {
-            font-size: 1.2rem; font-family: var(--font-serif); border-bottom: 1px solid rgba(0,0,0,0.1);
-            padding-bottom: 0.5rem; display: flex; justify-content: space-between;
-        }
-        .skills-list li span { font-family: var(--font-sans); font-size: 0.8rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+        .screen.active{display:flex;animation:fadeIn .6s ease}
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-        /* Work 區塊 - 畫廊風格 */
-        .work-gallery { display: flex; flex-direction: column; gap: 15vh; margin-top: 5vh; }
-        .work-item {
-            display: grid; grid-template-columns: 5fr 3fr; gap: 4vw; align-items: center;
+        /* ========== BOOT SCREEN ========== */
+        #boot{
+            background:#000;
+            font-family:'VT323',monospace;
+            color:#7df9c4;
+            align-items:flex-start;
+            justify-content:flex-start;
+            padding:24px 16px;
+            z-index:100;
         }
-        .work-item:nth-child(even) { grid-template-columns: 3fr 5fr; }
-        .work-item:nth-child(even) .work-image-wrap { order: 2; }
-        .work-item:nth-child(even) .work-info { order: 1; text-align: right; }
+        .boot-line{
+            font-size:18px;
+            line-height:1.4;
+            margin-bottom:4px;
+            opacity:0;
+            animation:bootLine .1s steps(1) forwards;
+        }
+        .boot-line.err{color:var(--accent-3)}
+        .boot-line.ok{color:#7df9c4}
+        .boot-line.warn{color:#ffb84d}
+        @keyframes bootLine{to{opacity:1}}
+        .boot-bar{
+            margin-top:12px;
+            width:90%;max-width:280px;
+            border:2px solid #7df9c4;
+            padding:2px;
+            opacity:0;
+            animation:bootLine .1s steps(1) forwards;
+            animation-delay:1.2s;
+        }
+        .boot-bar-fill{
+            height:14px;
+            width:0%;
+            background:#7df9c4;
+            animation:fillBar 1.8s steps(20) forwards;
+            animation-delay:1.3s;
+        }
+        @keyframes fillBar{to{width:100%}}
 
-        /* 精準匹配 1500x839 尺寸，保證圖片不被裁切 */
-        .work-image-wrap {
-            overflow: hidden;
-            aspect-ratio: 1500 / 839;
-            position: relative;
-            background: #d4d2ce; /* 圖片加載前的骨架色 */
+        /* ========== TITLE SCREEN ========== */
+        #title{
+            text-align:center;
         }
-        .work-image-wrap img {
-            width: 100%; height: 100%; object-fit: cover;
-            filter: grayscale(100%) contrast(1.1);
-            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), filter 1s ease;
+        .title-star{
+            font-size:48px;
+            color:#fff;
+            text-shadow:
+                    0 0 8px #fff,
+                    0 0 16px #c084ff,
+                    0 0 24px #c084ff;
+            margin-bottom:24px;
+            animation:starPulse 2s ease-in-out infinite;
         }
-        .work-item:hover .work-image-wrap img {
-            transform: scale(1.05); filter: grayscale(0%) contrast(1);
+        @keyframes starPulse{
+            0%,100%{transform:scale(1);filter:brightness(1)}
+            50%{transform:scale(1.15);filter:brightness(1.4)}
+        }
+        .title-name{
+            font-family:'Press Start 2P',monospace;
+            font-size:clamp(28px,9vw,52px);
+            line-height:1.3;
+            color:var(--accent);
+            text-shadow:
+                    3px 3px 0 #4a2b8c,
+                    0 0 16px rgba(192,132,255,.6),
+                    0 0 32px rgba(192,132,255,.4);
+            margin-bottom:8px;
+            letter-spacing:2px;
+        }
+        .title-sub{
+            font-family:'Press Start 2P',monospace;
+            font-size:clamp(10px,3vw,14px);
+            color:var(--accent-2);
+            letter-spacing:4px;
+            text-shadow:0 0 8px rgba(125,249,196,.5);
+            margin-bottom:48px;
+        }
+        .title-menu{
+            display:flex;flex-direction:column;
+            gap:12px;
+            margin-top:24px;
+        }
+        .menu-item{
+            font-family:'Press Start 2P',monospace;
+            font-size:13px;
+            color:var(--ink);
+            padding:8px 28px 8px 24px;
+            position:relative;
+            transition:color .15s;
+            letter-spacing:1.5px;
+        }
+        .menu-item::before{
+            content:'▶';
+            position:absolute;
+            left:4px;
+            opacity:0;
+            color:var(--accent);
+            transition:opacity .1s, transform .1s;
+        }
+        .menu-item:hover,.menu-item:focus,.menu-item.sel{
+            color:var(--accent);
+            text-shadow:0 0 8px var(--accent);
+            outline:none;
+        }
+        .menu-item:hover::before,.menu-item:focus::before,.menu-item.sel::before{
+            opacity:1;
+            animation:pointerBlink .4s steps(2) infinite;
+        }
+        @keyframes pointerBlink{
+            0%,100%{transform:translateX(0)}
+            50%{transform:translateX(3px)}
+        }
+        .title-ver{
+            position:absolute;
+            bottom:20px;right:16px;
+            font-family:'Press Start 2P',monospace;
+            font-size:9px;
+            color:var(--ink-dim);
+            letter-spacing:1px;
+            opacity:.7;
+        }
+        .press-start{
+            font-family:'Press Start 2P',monospace;
+            font-size:11px;
+            color:var(--accent-2);
+            letter-spacing:2px;
+            margin-top:32px;
+            animation:blink 1s steps(2) infinite;
+        }
+        @keyframes blink{
+            0%,100%{opacity:1}
+            50%{opacity:0}
         }
 
-        .work-info h3 {
-            font-family: var(--font-serif); font-size: 3rem; font-weight: 400;
-            margin: 0 0 1rem 0; line-height: 1.1;
-        }
-        .work-info p { color: var(--muted); margin-bottom: 2rem; font-size: 0.95rem; max-width: 400px; }
-        .work-info:nth-child(even) p { margin-left: auto; }
-        .work-link {
-            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;
-            display: inline-block; position: relative; padding-bottom: 4px; border-bottom: 1px solid var(--ink);
+        /* ========== GAME SCREEN (visual novel) ========== */
+        #game{
+            justify-content:flex-end;
+            padding:0;
         }
 
-        /* Contact 區塊 */
-        .contact { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .contact-email {
-            font-family: var(--font-serif); font-size: clamp(2rem, 6vw, 6rem);
-            font-style: italic; font-weight: 300; margin: 2rem 0; position: relative;
+        /* Location label (top-left) */
+        .location-tag{
+            position:absolute;
+            top:16px;left:16px;
+            font-family:'Press Start 2P',monospace;
+            font-size:9px;
+            color:var(--accent-2);
+            background:rgba(10,4,24,.85);
+            border:2px solid var(--accent-2);
+            padding:6px 10px;
+            letter-spacing:1.5px;
+            box-shadow:0 0 0 2px #000, 4px 4px 0 rgba(125,249,196,.3);
+            z-index:5;
         }
 
-        footer {
-            padding: 40px; text-align: center; font-size: 0.75rem; letter-spacing: 0.2em;
-            color: var(--muted); text-transform: uppercase;
+        /* Top-right HUD: menu + chapter */
+        .hud-right{
+            position:absolute;
+            top:16px;right:16px;
+            display:flex;
+            gap:8px;
+            z-index:5;
+        }
+        .hud-btn{
+            font-family:'Press Start 2P',monospace;
+            font-size:8px;
+            color:var(--ink);
+            background:rgba(10,4,24,.85);
+            border:2px solid var(--frame);
+            padding:6px 8px;
+            letter-spacing:1px;
+            box-shadow:0 0 0 2px #000;
+            transition:.15s;
+        }
+        .hud-btn:hover,.hud-btn:active{
+            background:var(--frame-dark);
+            color:#fff;
+            text-shadow:0 0 6px var(--accent);
         }
 
-        /* 滾動動畫 Reveal */
-        .reveal {
-            opacity: 0; transform: translateY(60px);
-            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        /* Character portrait area (image showcase) */
+        .stage-display{
+            flex:1;
+            width:100%;
+            max-width:760px;
+            margin:60px auto 12px;
+            padding:0 16px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            position:relative;
+            min-height:0;
         }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        .portrait-frame{
+            width:100%;
+            max-width:520px;
+            aspect-ratio:16/9;
+            background:#0a0418;
+            border:3px solid var(--frame);
+            box-shadow:
+                    0 0 0 3px #000,
+                    6px 6px 0 var(--frame-dark),
+                    0 0 24px rgba(192,132,255,.4);
+            position:relative;
+            overflow:hidden;
+            image-rendering:pixelated;
+        }
+        .portrait-frame::before,
+        .portrait-frame::after{
+            content:'';
+            position:absolute;
+            width:12px;height:12px;
+            border:2px solid var(--accent-2);
+            z-index:2;
+        }
+        .portrait-frame::before{top:4px;left:4px;border-right:none;border-bottom:none}
+        .portrait-frame::after{bottom:4px;right:4px;border-left:none;border-top:none}
+        .portrait-img{
+            width:100%;height:100%;
+            object-fit:cover;
+            image-rendering:pixelated;
+            filter:contrast(1.05) saturate(1.1);
+            opacity:0;
+            transition:opacity .4s;
+        }
+        .portrait-img.show{opacity:1;animation:portraitIn .4s steps(4)}
+        @keyframes portraitIn{
+            0%{opacity:0;transform:scale(.96)}
+            100%{opacity:1;transform:scale(1)}
+        }
+        .portrait-placeholder{
+            width:100%;height:100%;
+            display:flex;align-items:center;justify-content:center;
+            font-family:'Press Start 2P',monospace;
+            font-size:14px;
+            color:var(--accent);
+            letter-spacing:3px;
+            background:
+                    linear-gradient(45deg, transparent 48%, rgba(192,132,255,.15) 49%, rgba(192,132,255,.15) 51%, transparent 52%),
+                    linear-gradient(-45deg, transparent 48%, rgba(192,132,255,.15) 49%, rgba(192,132,255,.15) 51%, transparent 52%),
+                    #0a0418;
+            background-size:20px 20px;
+        }
 
-        /* 響應式 */
-        @media (max-width: 768px) {
-            .fixed-nav { top: 20px; left: 20px; right: 20px; }
-            section { padding: 12vh 20px; }
-            .about-grid { grid-template-columns: 1fr; gap: 40px; }
-            .vertical-text { writing-mode: horizontal-tb; height: auto; font-size: 2rem; }
-            .work-item { grid-template-columns: 1fr !important; gap: 20px; }
-            .work-item:nth-child(even) .work-image-wrap { order: 1; }
-            .work-item:nth-child(even) .work-info { order: 2; text-align: left; }
-            .work-info p { margin-left: 0 !important; }
-            .cursor { display: none; /* 手機端隱藏自定義游標 */ }
-            * { cursor: auto; }
+        /* Dialog box at bottom */
+        .dialog-wrap{
+            width:100%;
+            padding:0 12px 16px;
+            max-width:760px;
+            margin:0 auto;
         }
+        .name-tag{
+            display:inline-block;
+            font-family:'Press Start 2P',monospace;
+            font-size:11px;
+            color:#fff;
+            background:var(--frame-dark);
+            border:2px solid var(--frame);
+            padding:6px 12px;
+            margin-bottom:-2px;
+            margin-left:8px;
+            position:relative;
+            z-index:2;
+            letter-spacing:1.5px;
+            box-shadow:0 0 0 2px #000;
+            text-shadow:1px 1px 0 #000;
+        }
+        .dialog-box{
+            background:rgba(10,4,24,.95);
+            border:3px solid var(--frame);
+            box-shadow:
+                    0 0 0 3px #000,
+                    0 0 24px rgba(192,132,255,.3);
+            padding:18px 20px;
+            min-height:120px;
+            position:relative;
+            font-family:'DotGothic16',monospace;
+            font-size:17px;
+            line-height:1.6;
+            color:var(--ink);
+            letter-spacing:.5px;
+        }
+        /* Corner decoration on dialog */
+        .dialog-box::before,
+        .dialog-box::after{
+            content:'';
+            position:absolute;
+            width:8px;height:8px;
+            background:var(--accent);
+        }
+        .dialog-box::before{top:-3px;left:-3px;box-shadow:0 0 6px var(--accent)}
+        .dialog-box::after{bottom:-3px;right:-3px;box-shadow:0 0 6px var(--accent)}
+
+        .dialog-text{
+            min-height:80px;
+        }
+        .dialog-text .keyword{color:var(--accent);text-shadow:0 0 6px var(--accent)}
+        .dialog-text .keyword-2{color:var(--accent-2);text-shadow:0 0 6px var(--accent-2)}
+        .dialog-text .keyword-3{color:var(--accent-3);text-shadow:0 0 6px var(--accent-3)}
+
+        .next-arrow{
+            position:absolute;
+            bottom:8px;right:14px;
+            color:var(--accent);
+            font-size:14px;
+            opacity:0;
+            animation:arrowBounce .8s steps(2) infinite;
+        }
+        .next-arrow.show{opacity:1}
+        @keyframes arrowBounce{
+            0%,100%{transform:translateY(0)}
+            50%{transform:translateY(3px)}
+        }
+
+        /* Choice menu */
+        .choices{
+            position:absolute;
+            bottom:180px;
+            left:50%;
+            transform:translateX(-50%);
+            width:calc(100% - 24px);
+            max-width:480px;
+            display:none;
+            flex-direction:column;
+            gap:8px;
+            z-index:3;
+        }
+        .choices.show{display:flex;animation:choicesIn .3s ease}
+        @keyframes choicesIn{
+            from{opacity:0;transform:translate(-50%,8px)}
+            to{opacity:1;transform:translateX(-50%)}
+        }
+        .choice{
+            background:rgba(10,4,24,.95);
+            border:2px solid var(--frame);
+            box-shadow:0 0 0 2px #000, 3px 3px 0 var(--frame-dark);
+            padding:12px 14px 12px 36px;
+            font-family:'DotGothic16',monospace;
+            font-size:15px;
+            color:var(--ink);
+            text-align:left;
+            position:relative;
+            letter-spacing:.5px;
+            transition:.15s;
+        }
+        .choice::before{
+            content:'▶';
+            position:absolute;
+            left:12px;top:50%;
+            transform:translateY(-50%);
+            color:var(--frame-dark);
+            font-size:14px;
+            transition:.15s;
+        }
+        .choice:hover,.choice:focus,.choice:active{
+            background:var(--frame-dark);
+            color:#fff;
+            border-color:var(--accent-2);
+            box-shadow:0 0 0 2px #000, 3px 3px 0 var(--accent-2), 0 0 16px rgba(192,132,255,.5);
+            outline:none;
+        }
+        .choice:hover::before,.choice:focus::before,.choice:active::before{
+            color:var(--accent-2);
+            animation:pointerBlink .4s steps(2) infinite;
+        }
+
+        /* ========== SAVE POINT / CHAPTER BANNER ========== */
+        .chapter-banner{
+            position:absolute;
+            inset:0;
+            display:none;
+            align-items:center;
+            justify-content:center;
+            flex-direction:column;
+            background:rgba(10,4,24,.7);
+            backdrop-filter:blur(2px);
+            z-index:50;
+        }
+        .chapter-banner.show{display:flex;animation:fadeIn .4s}
+        .chapter-box{
+            background:#0a0418;
+            border:3px solid var(--accent-2);
+            box-shadow:
+                    0 0 0 3px #000,
+                    6px 6px 0 rgba(125,249,196,.4),
+                    0 0 32px rgba(125,249,196,.4);
+            padding:24px 32px;
+            text-align:center;
+            animation:chapterIn .5s steps(4);
+        }
+        @keyframes chapterIn{
+            0%{transform:scale(.8);opacity:0}
+            100%{transform:scale(1);opacity:1}
+        }
+        .chapter-label{
+            font-family:'Press Start 2P',monospace;
+            font-size:10px;
+            color:var(--accent-2);
+            letter-spacing:3px;
+            margin-bottom:12px;
+        }
+        .chapter-title{
+            font-family:'Press Start 2P',monospace;
+            font-size:18px;
+            color:#fff;
+            text-shadow:0 0 8px var(--accent);
+            letter-spacing:2px;
+            line-height:1.4;
+        }
+        .save-icon{
+            display:inline-block;
+            margin-bottom:12px;
+            font-size:24px;
+            animation:saveBlink .5s steps(2) infinite;
+        }
+        @keyframes saveBlink{
+            0%,100%{opacity:1}
+            50%{opacity:.3}
+        }
+
+        /* ========== PAUSE MENU ========== */
+        #pause{
+            position:absolute;
+            inset:0;
+            display:none;
+            align-items:center;
+            justify-content:center;
+            background:rgba(0,0,0,.85);
+            z-index:200;
+        }
+        #pause.show{display:flex;animation:fadeIn .2s}
+        .pause-box{
+            background:#0a0418;
+            border:3px solid var(--frame);
+            box-shadow:0 0 0 3px #000, 6px 6px 0 var(--frame-dark);
+            padding:24px 32px;
+            min-width:240px;
+            text-align:center;
+        }
+        .pause-title{
+            font-family:'Press Start 2P',monospace;
+            font-size:14px;
+            color:var(--accent);
+            letter-spacing:3px;
+            margin-bottom:20px;
+            text-shadow:0 0 6px var(--accent);
+        }
+        .pause-menu{display:flex;flex-direction:column;gap:8px}
+        .pause-item{
+            font-family:'Press Start 2P',monospace;
+            font-size:11px;
+            color:var(--ink);
+            padding:10px 16px;
+            text-align:left;
+            position:relative;
+            padding-left:32px;
+        }
+        .pause-item::before{
+            content:'▶';
+            position:absolute;
+            left:12px;top:50%;
+            transform:translateY(-50%);
+            opacity:0;
+            color:var(--accent);
+        }
+        .pause-item:hover,.pause-item:focus{
+            color:var(--accent);
+            text-shadow:0 0 6px var(--accent);
+            outline:none;
+        }
+        .pause-item:hover::before,.pause-item:focus::before{opacity:1}
+
+        /* ========== TRANSITION OVERLAY ========== */
+        #transition{
+            position:fixed;inset:0;
+            background:#000;
+            z-index:500;
+            opacity:0;
+            pointer-events:none;
+            transition:opacity .4s;
+        }
+        #transition.show{opacity:1;pointer-events:auto}
+
+        /* ========== ENDING SCREEN ========== */
+        #ending{
+            text-align:center;
+        }
+        .ending-thanks{
+            font-family:'Press Start 2P',monospace;
+            font-size:18px;
+            color:var(--accent);
+            letter-spacing:3px;
+            margin-bottom:8px;
+            text-shadow:0 0 10px var(--accent);
+        }
+        .ending-sub{
+            font-family:'DotGothic16',monospace;
+            font-size:18px;
+            color:var(--ink);
+            margin-bottom:32px;
+            line-height:1.6;
+            max-width:300px;
+        }
+        .ending-contact{
+            font-family:'Press Start 2P',monospace;
+            font-size:11px;
+            color:var(--accent-2);
+            background:rgba(10,4,24,.9);
+            border:2px solid var(--accent-2);
+            padding:10px 16px;
+            margin-bottom:16px;
+            text-shadow:0 0 6px var(--accent-2);
+            box-shadow:0 0 0 2px #000;
+            letter-spacing:1px;
+            word-break:break-all;
+        }
+
+        /* ========== TINY RESPONSIVE ========== */
+        @media (min-height:700px){
+            .portrait-frame{max-width:560px}
+        }
+        @media (max-width:380px){
+            .dialog-box{font-size:15px;padding:14px 16px;min-height:110px}
+            .name-tag{font-size:10px}
+            .title-name{font-size:32px}
+        }
+
+        /* Subtle screen flicker */
+        @keyframes flicker{
+            0%,99%{opacity:1}
+            99.5%{opacity:.92}
+            100%{opacity:1}
+        }
+        #stage{animation:flicker 6s infinite}
     </style>
 </head>
 <body>
 
-<div class="noise"></div>
-<div class="dream-orb orb-1"></div>
-<div class="dream-orb orb-2"></div>
+<div id="stage">
+    <div class="stars"></div>
+    <div class="sparkle" style="top:25%;left:18%;animation-delay:0s"></div>
+    <div class="sparkle" style="top:65%;left:78%;animation-delay:1.2s;width:6px;height:6px"></div>
+    <div class="sparkle" style="top:42%;left:62%;animation-delay:2.5s;width:5px;height:5px"></div>
+    <div class="sparkle" style="top:78%;left:30%;animation-delay:3.8s;width:7px;height:7px"></div>
+</div>
 
-<div class="cursor" id="cursor"></div>
+<!-- ========== BOOT SCREEN ========== -->
+<div id="boot" class="screen active">
+    <div class="boot-line ok" style="animation-delay:.1s">&gt; portfolio.exe v1.0</div>
+    <div class="boot-line" style="animation-delay:.2s">&gt; (c) 2026 fanyu kong studio</div>
+    <div class="boot-line" style="animation-delay:.4s">&gt; loading kernel modules....</div>
+    <div class="boot-line ok" style="animation-delay:.5s">&gt; [OK] ux_engine.dll</div>
+    <div class="boot-line ok" style="animation-delay:.6s">&gt; [OK] research_lib.so</div>
+    <div class="boot-line ok" style="animation-delay:.7s">&gt; [OK] audio_hci.bin</div>
+    <div class="boot-line warn" style="animation-delay:.8s">&gt; [..] dream_renderer.exe</div>
+    <div class="boot-line ok" style="animation-delay:1.0s">&gt; [OK] dream_renderer.exe</div>
+    <div class="boot-line" style="animation-delay:1.1s">&gt; mounting /portfolio ...</div>
+    <div class="boot-bar"><div class="boot-bar-fill"></div></div>
+    <div class="boot-line ok" style="animation-delay:3.2s">&gt; ready. opening title screen...</div>
+</div>
 
-<nav class="fixed-nav">
-    <div class="brand">F. Kong</div>
-    <div class="nav-links">
-        <a href="#about" class="hover-target">About</a>
-        <a href="#work" class="hover-target">Exhibition</a>
-        <a href="#contact" class="hover-target">Contact</a>
+<!-- ========== TITLE SCREEN ========== -->
+<div id="title" class="screen">
+    <div class="title-star">✦</div>
+    <h1 class="title-name">FANYU<br>KONG</h1>
+    <div class="title-sub">UX DESIGNER · EXE</div>
+    <div class="title-menu" role="menu">
+        <button class="menu-item sel" data-action="new" tabindex="0">NEW GAME</button>
+        <button class="menu-item" data-action="load" tabindex="0">LOAD SAVE</button>
+        <button class="menu-item" data-action="about" tabindex="0">ABOUT</button>
+        <button class="menu-item" data-action="contact" tabindex="0">CONTACT</button>
     </div>
-</nav>
+    <div class="press-start" id="pressStart">▼ TAP TO START ▼</div>
+    <div class="title-ver">ver 1.0 · portfolio.exe</div>
+</div>
 
-<section class="hero" id="home">
-    <h1 class="hero-title reveal">Fanyu<br>Kong</h1>
-    <p class="hero-subtitle reveal" style="transition-delay: 0.1s;">
-        UX/UI designer exploring the intersection of audio, emotion, and interaction. Focused on inclusive, research-driven experiences that merge profound clarity with delicate emotion.
-    </p>
-    <div class="availability reveal" style="transition-delay: 0.2s;">
-        <span class="dot"></span> Available for new realms
+<!-- ========== GAME / VISUAL NOVEL ========== -->
+<div id="game" class="screen">
+    <div class="location-tag" id="locationTag">★ THE STUDIO</div>
+    <div class="hud-right">
+        <button class="hud-btn" id="skipBtn" title="skip">SKIP</button>
+        <button class="hud-btn" id="menuBtn" title="menu">≡ MENU</button>
     </div>
-</section>
 
-<section id="about">
-    <div class="eyebrow reveal">01 — About the mind</div>
-    <div class="about-grid">
-        <div class="vertical-text reveal">
-            Designing systems that not only function, <br>but continuously resonate.
+    <div class="stage-display">
+        <div class="portrait-frame">
+            <img class="portrait-img" id="portrait" alt="" />
+            <div class="portrait-placeholder" id="portraitPh">✦ DREAMING ✦</div>
         </div>
-        <div class="skills-container reveal">
-            <ul class="skills-list">
-                <li>UX / UI Design <span>Core</span></li>
-                <li>Research & Usability <span>Insight</span></li>
-                <li>Audio UX / HCI <span>Senses</span></li>
-                <li>Game UI (Unity) <span>Interactive</span></li>
-                <li>Inclusive Design (WCAG) <span>Empathy</span></li>
-                <li>Frontend Logic <span>Code</span></li>
-            </ul>
+    </div>
+
+    <div class="choices" id="choices"></div>
+
+    <div class="dialog-wrap">
+        <div class="name-tag" id="nameTag">FANYU</div>
+        <div class="dialog-box" onclick="VN.advance()">
+            <div class="dialog-text" id="dialogText"></div>
+            <span class="next-arrow" id="nextArrow">▼</span>
         </div>
     </div>
-</section>
 
-<section id="work">
-    <div class="eyebrow reveal">02 — Selected Archives</div>
-    <div class="work-gallery">
+    <!-- Chapter banner -->
+    <div class="chapter-banner" id="chapterBanner">
+        <div class="chapter-box">
+            <div class="save-icon">💾</div>
+            <div class="chapter-label" id="chapterLabel">CHAPTER 01</div>
+            <div class="chapter-title" id="chapterTitle">THE STUDIO</div>
+        </div>
+    </div>
 
-        <div class="work-item reveal">
-            <a href="https://www.e-hospital.ca" target="_blank" class="work-image-wrap hover-target">
-                <img src="image/e-hospital.png" alt="e-Hospital" onerror="this.style.display='none'; this.parentNode.style.background='#c8c6c1';"/>
-            </a>
-            <div class="work-info">
-                <h3>e-Hospital</h3>
-                <p>Accessible healthcare platform prioritizing human-centric navigation. Achieved a +27% task completion rate through rigorous inclusive restructuring.</p>
-                <a href="https://www.e-hospital.ca" target="_blank" class="work-link hover-target">Explore Archive</a>
+    <!-- Pause menu -->
+    <div id="pause">
+        <div class="pause-box">
+            <div class="pause-title">— PAUSED —</div>
+            <div class="pause-menu">
+                <button class="pause-item" onclick="VN.resume()">▷ RESUME</button>
+                <button class="pause-item" onclick="VN.goTitle()">▷ TITLE SCREEN</button>
+                <button class="pause-item" onclick="VN.openContact()">▷ CONTACT</button>
             </div>
         </div>
-
-        <div class="work-item reveal">
-            <a href="https://rarebib.pkudh.org" target="_blank" class="work-image-wrap hover-target">
-                <img src="image/rare_book.png" alt="Rare-Book Search" onerror="this.style.display='none'; this.parentNode.style.background='#aeb4b8';"/>
-            </a>
-            <div class="work-info">
-                <h3>Rare-Book</h3>
-                <p>Digital humanities platform archiving 13,026 historical volumes. Bridging the gap between ancient heritage and modern digital accessibility.</p>
-                <a href="https://rarebib.pkudh.org" target="_blank" class="work-link hover-target">Explore Archive</a>
-            </div>
-        </div>
-
-        <div class="work-item reveal">
-            <a href="#" class="work-image-wrap hover-target">
-                <img src="image/to-do_rpg.png" alt="To-Do RPG" onerror="this.style.display='none'; this.parentNode.style.background='#d1c4b8';"/>
-            </a>
-            <div class="work-info">
-                <h3>To-Do RPG</h3>
-                <p>A gamified prototype transforming mundane daily tasks into engaging behavioral loops through psychological UI mechanisms.</p>
-                <a href="#" class="work-link hover-target">Concept Only</a>
-            </div>
-        </div>
-
     </div>
-</section>
+</div>
 
-<section id="contact" class="contact">
-    <div class="eyebrow reveal">03 — Initiate connection</div>
-    <a href="mailto:fanyu-kong@outlook.com" class="contact-email hover-target reveal">
-        fanyu-kong@outlook.com
-    </a>
-    <p class="reveal" style="color: var(--muted); font-size: 0.9rem; max-width: 400px; margin-top: 2rem;">
-        Currently open to collaborative opportunities and conceptual discussions. Let's shape the digital space.
-    </p>
-</section>
+<!-- ========== ENDING SCREEN ========== -->
+<div id="ending" class="screen">
+    <div class="title-star" style="font-size:36px">✦</div>
+    <div class="ending-thanks">THANK YOU FOR PLAYING</div>
+    <div class="ending-sub">— and for wandering through this little dream of mine.</div>
+    <button class="ending-contact" onclick="window.location.href='mailto:fanyu-kong@outlook.com'">✉ FANYU-KONG@OUTLOOK.COM</button>
+    <button class="menu-item sel" onclick="VN.goTitle()" style="margin-top:8px">▷ RETURN TO TITLE</button>
+    <div class="title-ver">— FIN —</div>
+</div>
 
-<footer>
-    © <span id="year"></span> Fanyu Kong. All rights reserved in reality and dreams.
-</footer>
+<div id="transition"></div>
+<div id="scanlines"></div>
+<div id="vignette"></div>
 
 <script>
-    // 設定年份
-    document.getElementById('year').textContent = new Date().getFullYear();
+    /* ============================================================
+       VISUAL NOVEL ENGINE
+       ============================================================ */
 
-    // 1. 自定義游標邏輯
-    const cursor = document.getElementById('cursor');
-    const hoverTargets = document.querySelectorAll('.hover-target, a');
+    const SCRIPT = {
+        /* ===== CHAPTER 1: 開場 ===== */
+        ch1_start: {
+            chapter:{ label:'CHAPTER 01', title:'THE STUDIO', location:'★ THE STUDIO' },
+            image:'image/avatar.png',
+            lines:[
+                { name:'???',     text:'……あ、起きた?' },
+                { name:'???',     text:'いらっしゃい。ここは、私の<span class="keyword">小さなアトリエ</span>。' },
+                { name:'FANYU',   text:'私は <span class="keyword">Fanyu Kong</span>。みんなは <span class="keyword-2">Yura</span> って呼んでくれる。' },
+                { name:'FANYU',   text:'UX/UIデザイナー。元はソフトウェアエンジニア、その後 UXデザインの修士を取った。' },
+                { name:'FANYU',   text:'今は <span class="keyword-3">音・感情・インタラクション</span> が交わる場所を探している。' },
+                { name:'FANYU',   text:'……このゲーム、あなたが <span class="keyword">プレイヤー</span> ね。よろしく。' },
+                { name:'FANYU',   text:'よかったら、私の作ってきた世界を一緒に見に行かない?' },
+                { choices:[
+                        { text:'もちろん、案内して。',         next:'ch2_intro' },
+                        { text:'まずは君のことを教えて。',    next:'about_branch' }
+                    ]}
+            ]
+        },
 
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-    });
+        /* ===== ABOUT branch ===== */
+        about_branch: {
+            location:'★ ABOUT · YURA',
+            image:'image/avatar.png',
+            lines:[
+                { name:'FANYU', text:'私のこと?……少し恥ずかしいけど、いいよ。' },
+                { name:'FANYU', text:'<span class="keyword">e-health</span>、非営利、文化遺産――そういうプロジェクトに関わってきた。' },
+                { name:'FANYU', text:'ただ「動く」だけじゃなくて、<span class="keyword-2">心に響く</span>システムを作りたいと思っている。' },
+                { name:'FANYU', text:'特に好きなのは、<span class="keyword-3">audio UI</span> や <span class="keyword-3">HCI</span>。音にはまだまだ未開拓の表現がある。' },
+                { name:'FANYU', text:'スキル?……えーと、リサーチ、ユーザビリティテスト、IA、プロトタイピング、Unity の Game UI……あと、フロントエンドも書ける。' },
+                { name:'FANYU', text:'<span class="keyword">HTML/CSS, JavaScript, React, Vue</span>――エンジニアと話せるデザイナーでありたいから。' },
+                { name:'FANYU', text:'……さて、もうじゅうぶん自己紹介したかな。本題に入ろうか。' },
+                { goto:'ch2_intro' }
+            ]
+        },
 
-    hoverTargets.forEach(target => {
-        target.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
-        target.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
-    });
+        /* ===== CHAPTER 2: 作品選択 ===== */
+        ch2_intro: {
+            chapter:{ label:'CHAPTER 02', title:'THE GALLERY', location:'★ THE GALLERY' },
+            image:'image/library.png',
+            lines:[
+                { name:'FANYU', text:'ここは作品の<span class="keyword">展示室</span>。3つの扉がある。' },
+                { name:'FANYU', text:'どこから見たい? 順番は自由よ。' },
+                { choices:[
+                        { text:'🏥  e-Hospital  ―  healthcare',          next:'work_ehospital',  flag:'ehospital' },
+                        { text:'📚  Rare-Book Search  ―  heritage',       next:'work_rarebook',   flag:'rarebook' },
+                        { text:'🎮  To-Do RPG  ―  gamified',              next:'work_todorpg',    flag:'todorpg' },
+                        { text:'→  もう十分、エンディングへ',              next:'ending_route' }
+                    ]}
+            ]
+        },
 
-    // 2. 高端滾動顯示動畫 (Intersection Observer)
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15
+        /* ===== WORK 1: e-Hospital ===== */
+        work_ehospital: {
+            chapter:{ label:'CHAPTER · WORK 01', title:'E-HOSPITAL', location:'★ E-HOSPITAL' },
+            image:'image/e-hospital.png',
+            lines:[
+                { name:'FANYU', text:'最初の扉。<span class="keyword">e-Hospital</span> ――アクセシブルな医療プラットフォーム。' },
+                { name:'FANYU', text:'高齢者や、デジタルに慣れていない人でも迷わず使えること。それが最初の課題だった。' },
+                { name:'FANYU', text:'リサーチ、IA再設計、フローの単純化……地道な作業の積み重ね。' },
+                { name:'FANYU', text:'結果は ―― <span class="keyword-2">タスク完了率 +27%</span>。数字以上に、現場の声が嬉しかった。' },
+                { name:'FANYU', text:'WCAGに準拠したインクルーシブデザイン。「届く」ことが、医療では何より大事だから。' },
+                { choices:[
+                        { text:'🔗  実際のサイトを見る',     next:'visit_ehospital' },
+                        { text:'←  ギャラリーに戻る',         next:'ch2_intro' }
+                    ]}
+            ]
+        },
+        visit_ehospital: {
+            lines:[
+                { name:'FANYU', text:'新しいタブで開くね。<span class="keyword">e-hospital.ca</span>。' },
+                { action:'openUrl', url:'https://www.e-hospital.ca' },
+                { name:'FANYU', text:'戻ってきたら、次の扉も開けられるよ。' },
+                { goto:'ch2_intro' }
+            ]
+        },
+
+        /* ===== WORK 2: Rare-Book Search ===== */
+        work_rarebook: {
+            chapter:{ label:'CHAPTER · WORK 02', title:'RARE-BOOK SEARCH', location:'★ THE ARCHIVE' },
+            image:'image/rare_book.png',
+            lines:[
+                { name:'FANYU', text:'次の扉。<span class="keyword">Rare-Book Search</span> ――デジタル人文学のプラットフォーム。' },
+                { name:'FANYU', text:'<span class="keyword-2">485機関</span>、<span class="keyword-2">13,026冊</span>の貴重書を、一つの検索体験にまとめた。' },
+                { name:'FANYU', text:'研究者にとって「探せること」は「研究できること」と同義。検索体験そのものが、学問の入り口になる。' },
+                { name:'FANYU', text:'文字の組み方、ファセット、引用フォーマット……細部に学術の作法を編み込んだ。' },
+                { name:'FANYU', text:'歴史を扱うUIには、独特の落ち着きが必要。派手じゃなくて、信頼できる静けさ。' },
+                { choices:[
+                        { text:'🔗  実際のサイトを見る',     next:'visit_rarebook' },
+                        { text:'←  ギャラリーに戻る',         next:'ch2_intro' }
+                    ]}
+            ]
+        },
+        visit_rarebook: {
+            lines:[
+                { name:'FANYU', text:'リンクは <span class="keyword">rarebib.pkudh.org</span>。' },
+                { action:'openUrl', url:'https://rarebib.pkudh.org' },
+                { name:'FANYU', text:'……古い本の匂い、画面越しでも届くといいな。' },
+                { goto:'ch2_intro' }
+            ]
+        },
+
+        /* ===== WORK 3: To-Do RPG ===== */
+        work_todorpg: {
+            chapter:{ label:'CHAPTER · WORK 03', title:'TO-DO RPG', location:'★ THE DUNGEON' },
+            image:'image/to-do_rpg.png',
+            lines:[
+                { name:'FANYU', text:'三つ目の扉。<span class="keyword">To-Do RPG</span> ――日々のタスクをRPGに変えるプロトタイプ。' },
+                { name:'FANYU', text:'掃除がスライム退治。レポート提出はボス戦。……現実、ちょっと耐えやすくならない?' },
+                { name:'FANYU', text:'Unityで Game UI を組んで、達成感のフィードバックを丁寧に設計した。' },
+                { name:'FANYU', text:'<span class="keyword-3">ゲーミフィケーション</span>は、ご褒美をぶら下げることじゃない。' },
+                { name:'FANYU', text:'「自分の人生の主人公になる感覚」――それを取り戻すための道具なんだと思う。' },
+                { name:'FANYU', text:'……このポートフォリオ自体、その続きみたいなものかもね。' },
+                { choices:[
+                        { text:'←  ギャラリーに戻る',         next:'ch2_intro' }
+                    ]}
+            ]
+        },
+
+        /* ===== ENDING ===== */
+        ending_route: {
+            chapter:{ label:'FINAL CHAPTER', title:'STAY IN TOUCH', location:'★ THE END' },
+            image:'image/contact.png',
+            lines:[
+                { name:'FANYU', text:'ここまで付き合ってくれてありがとう。' },
+                { name:'FANYU', text:'デザインって、最終的には<span class="keyword">人と人の間にあるもの</span>だと思う。' },
+                { name:'FANYU', text:'もし話してみたいプロジェクトがあったり、ただ感想を伝えたいだけでも――' },
+                { name:'FANYU', text:'いつでもメールしてね。' },
+                { name:'FANYU', text:'<span class="keyword-2">fanyu-kong@outlook.com</span>' },
+                { name:'FANYU', text:'またどこかの画面の向こうで会えますように。✦' },
+                { action:'endScreen' }
+            ]
+        }
     };
 
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target); // 動畫只觸發一次，保持質感
-            }
-        });
-    }, observerOptions);
+    /* ============================================================
+       ENGINE STATE
+       ============================================================ */
+    const VN = {
+        current:null,
+        index:0,
+        typing:false,
+        typeTimer:null,
+        fullText:'',
+        speed:28,
+        save:null,
+        visited:{},
 
-    document.querySelectorAll('.reveal').forEach(el => {
-        observer.observe(el);
-    });
+        init(){
+            // Restore save flag
+            try{
+                const s = sessionStorage.getItem('vn_save');
+                if(s) this.save = JSON.parse(s);
+            }catch(e){}
+
+            // Boot → title
+            setTimeout(()=>this.showTitle(), 3600);
+
+            // Wire up title menu
+            document.querySelectorAll('.menu-item').forEach(btn=>{
+                btn.addEventListener('click', e=>{
+                    const a = btn.dataset.action;
+                    if(a==='new') this.startGame('ch1_start');
+                    else if(a==='load') this.loadSave();
+                    else if(a==='about') this.startGame('about_branch');
+                    else if(a==='contact') this.openContact();
+                });
+            });
+
+            // Tap to start (only on title)
+            document.getElementById('pressStart').addEventListener('click', ()=> this.startGame('ch1_start'));
+
+            // HUD
+            document.getElementById('menuBtn').addEventListener('click', ()=> this.pause());
+            document.getElementById('skipBtn').addEventListener('click', ()=> this.skipLine());
+
+            // Keyboard
+            document.addEventListener('keydown', e=>{
+                if(document.getElementById('game').classList.contains('active')){
+                    if(e.key==='Enter'||e.key===' '||e.key==='ArrowRight'){ e.preventDefault(); this.advance(); }
+                    if(e.key==='Escape'){ this.pause(); }
+                } else if(document.getElementById('title').classList.contains('active')){
+                    if(e.key==='Enter'||e.key===' ') this.startGame('ch1_start');
+                }
+            });
+        },
+
+        showScreen(id){
+            document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        },
+
+        showTitle(){
+            this.showScreen('title');
+        },
+
+        goTitle(){
+            document.getElementById('pause').classList.remove('show');
+            this.transition(()=> this.showTitle());
+        },
+
+        transition(cb){
+            const t = document.getElementById('transition');
+            t.classList.add('show');
+            setTimeout(()=>{ cb(); setTimeout(()=>t.classList.remove('show'), 100); }, 420);
+        },
+
+        startGame(sceneKey){
+            this.transition(()=>{
+                this.showScreen('game');
+                this.loadScene(sceneKey);
+            });
+        },
+
+        loadScene(key){
+            const scene = SCRIPT[key];
+            if(!scene) return;
+            this.current = key;
+            this.index = 0;
+            this.visited[key] = true;
+            this.saveState();
+
+            // Update location
+            if(scene.location){
+                document.getElementById('locationTag').innerHTML = scene.location;
+            }
+
+            // Update portrait/image
+            const img = document.getElementById('portrait');
+            const ph = document.getElementById('portraitPh');
+            if(scene.image){
+                img.src = scene.image;
+                img.classList.add('show');
+                ph.style.display='none';
+                img.onerror = ()=>{ img.classList.remove('show'); ph.style.display='flex'; ph.textContent = '✦ ' + (scene.chapter?scene.chapter.title:'DREAMING') + ' ✦'; };
+            } else {
+                img.classList.remove('show');
+                img.removeAttribute('src');
+                ph.style.display='flex';
+                ph.textContent = '✦ ' + (scene.chapter?scene.chapter.title:'DREAMING') + ' ✦';
+            }
+
+            // Chapter banner?
+            if(scene.chapter){
+                this.showChapter(scene.chapter, ()=> this.runLine());
+            } else {
+                this.runLine();
+            }
+        },
+
+        showChapter(ch, cb){
+            const banner = document.getElementById('chapterBanner');
+            document.getElementById('chapterLabel').textContent = ch.label;
+            document.getElementById('chapterTitle').textContent = ch.title;
+            banner.classList.add('show');
+            setTimeout(()=>{
+                banner.classList.remove('show');
+                cb && cb();
+            }, 1800);
+        },
+
+        runLine(){
+            const scene = SCRIPT[this.current];
+            if(!scene) return;
+            const line = scene.lines[this.index];
+            if(!line){ return; }
+
+            // Hide previous choices
+            document.getElementById('choices').classList.remove('show');
+            document.getElementById('nextArrow').classList.remove('show');
+
+            // goto
+            if(line.goto){
+                this.loadScene(line.goto);
+                return;
+            }
+
+            // action
+            if(line.action){
+                if(line.action==='openUrl'){
+                    window.open(line.url, '_blank', 'noopener');
+                    this.index++;
+                    this.runLine();
+                    return;
+                }
+                if(line.action==='endScreen'){
+                    this.transition(()=> this.showScreen('ending'));
+                    return;
+                }
+            }
+
+            // choices
+            if(line.choices){
+                this.renderChoices(line.choices);
+                return;
+            }
+
+            // dialogue
+            document.getElementById('nameTag').textContent = line.name || 'FANYU';
+            this.typeText(line.text);
+        },
+
+        typeText(html){
+            const target = document.getElementById('dialogText');
+            target.innerHTML = '';
+            this.fullText = html;
+            this.typing = true;
+
+            // Parse out tags so we type plain chars but render html progressively
+            const tmp = document.createElement('div');
+            tmp.innerHTML = html;
+            const plain = tmp.textContent;
+
+            let i = 0;
+            const step = () => {
+                if(i >= plain.length){
+                    this.typing = false;
+                    target.innerHTML = html;
+                    document.getElementById('nextArrow').classList.add('show');
+                    return;
+                }
+                // Show partial: take substring and re-render with tags if simple
+                // Simpler: just type plain, then swap to rich at end
+                target.textContent = plain.slice(0, i+1);
+                i++;
+                this.typeTimer = setTimeout(step, this.speed);
+            };
+            step();
+        },
+
+        skipLine(){
+            if(this.typing){
+                clearTimeout(this.typeTimer);
+                document.getElementById('dialogText').innerHTML = this.fullText;
+                this.typing = false;
+                document.getElementById('nextArrow').classList.add('show');
+            } else {
+                this.advance();
+            }
+        },
+
+        advance(){
+            if(document.getElementById('pause').classList.contains('show')) return;
+            if(document.getElementById('choices').classList.contains('show')) return;
+            if(this.typing){
+                this.skipLine();
+                return;
+            }
+            this.index++;
+            const scene = SCRIPT[this.current];
+            if(this.index >= scene.lines.length){
+                return; // wait
+            }
+            this.runLine();
+        },
+
+        renderChoices(choices){
+            const box = document.getElementById('choices');
+            box.innerHTML = '';
+            choices.forEach(c=>{
+                const btn = document.createElement('button');
+                btn.className = 'choice';
+                btn.textContent = c.text;
+                btn.addEventListener('click', ()=>{
+                    box.classList.remove('show');
+                    this.loadScene(c.next);
+                });
+                box.appendChild(btn);
+            });
+            box.classList.add('show');
+        },
+
+        pause(){
+            document.getElementById('pause').classList.add('show');
+        },
+        resume(){
+            document.getElementById('pause').classList.remove('show');
+        },
+
+        openContact(){
+            window.location.href = 'mailto:fanyu-kong@outlook.com';
+        },
+
+        saveState(){
+            try{
+                const data = { scene:this.current, index:this.index, visited:this.visited, t:Date.now() };
+                sessionStorage.setItem('vn_save', JSON.stringify(data));
+                this.save = data;
+            }catch(e){}
+        },
+
+        loadSave(){
+            if(!this.save){
+                // No save — just start
+                this.startGame('ch1_start');
+                return;
+            }
+            this.transition(()=>{
+                this.showScreen('game');
+                this.loadScene(this.save.scene || 'ch1_start');
+            });
+        }
+    };
+
+    window.addEventListener('DOMContentLoaded', ()=> VN.init());
 </script>
 </body>
 </html>
